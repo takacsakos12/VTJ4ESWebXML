@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mozi SYSTEM "BL mozi.dtd">
+<mozi>
+    <film id="txn-nxm_2jb" mufaj="horror">
+        <rendezo id="nzk_4xm_2jb" nev="alex" />
+        <szinesz id="u5g_4xm_2jb" nev="Madison_Ivy" />
+        <szinesz id="a">
+            <gyerekszinesz />
+            <musicalszinesz />
+            <szinkronszinesz />
+        </szinesz>
+        <iro id="trv_4xm_2jb" />
+    </film>
+
+    <film id="vmi_vki_6nt" mufaj="akcio">
+        <rendezo id="vmi_vki_1rdz" nev="Stephen">
+            <asszisztens nev="Kis Bela" />
+            <operator nev="Nagy Istvan" />
+        </rendezo>
+        <szinesz id="u5g_4xm_2jb" nev="Madison_Ivy" />
+        <szinesz id="a">
+            <gyerekszinesz />
+            <musicalszinesz />
+            <szinkronszinesz />
+        </szinesz>
+        <iro id="dsf_jzt_4nh" >
+            <forgatokonyv nev="Szabo Gergo" />
+            <dramaturg nev="Nagy Ferenc" />
+        </iro>    
+    </film>
+</mozi>
+
+
