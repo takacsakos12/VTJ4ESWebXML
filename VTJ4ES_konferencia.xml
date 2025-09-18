@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<konferencia>
+    <cim> Adatkezelés XML-ben </cim>
+    <hallgatók>
+        <hallgató>
+            <név> Balla Zsombor </név>
+            <lakcím> Miskolc, Kossuth utca 27. </lakcím>
+        </hallgató>
+        <hallgató>
+            <név> Tóth Eszter </név>
+            <lakcím> Nyíregyháza, Vörösmarty tér 11. </lakcím>
+        </hallgató>
+        <hallgató>
+            <név> Lakatos Patrik </név>
+            <lakcím> Győr, Arany János utca 8. </lakcím>
+        </hallgató>
+    </hallgatók>
+    <helyszín>
+        Debrecen, Kölcsey Központ
+    </helyszín>
+    <előadó>
+        <név> Dr. Fekete Emília </név>
+        <adószám> 453219876 </adószám>
+        <lakcím> Pécs, Kertváros, Petőfi utca 5. </lakcím>
+    </előadó>
+    <dátum> 2025. 09. 17 </dátum>
+</konferencia>
