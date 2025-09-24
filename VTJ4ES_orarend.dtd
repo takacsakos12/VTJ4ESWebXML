@@ -1,0 +1,11 @@
+<!ELEMENT VTJ4ES_orarend (ora+)>
+
+<!ELEMENT ora(targy, idopont, helyszin, oktato, szak)>
+<!ATTLIST ora id CDATA #REQUIRED
+                tipus (elmelet|gyakorlat) #REQUIRED>
+
+<!ELEMENT targy (#PCDATA)>
+<!ELEMENT idopont (nap,tol, ig)>
+<!ELEMENT helyszin (#PCDATA)>
+<!ELEMENT oktato (#PCDATA)>
+<!ELEMENT szak (#PCDATA)>
