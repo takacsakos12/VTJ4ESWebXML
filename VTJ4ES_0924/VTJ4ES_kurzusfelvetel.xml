@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+
+<VTJ4ES_kurzusfelvetel tanev="2025_2026 I." egyetem="ME">
+  <hallgato id="Y86I0I.ME">
+    <hnev>Takács Ákos</hnev>
+    <szulev>2002-12-09</szulev>
+    <szak evf="5"> Programtervező Informatikus </szak>
+  </hallgato>
+
+  <kurzusok>
+    <kurzus id="GEIAL331-B" nyelv="angol">
+      <kurzusnev>Számítógép hálózatok</kurzusnev>
+      <kredit>5</kredit>
+      <hely>A1. 315</hely>
+      <idopont>Hétfő 8:00-9:30</idopont>
+      <oktato>dr. Kovács Szilveszter</oktato>
+    </kurzus>
+    <kurzus id="GEIAL315-B">
+      <kurzusnev>Vállalit Információs Rendszerek Fejlesztése</kurzusnev>
+      <kredit>5</kredit>
+      <hely>In. 103</hely>
+      <idopont>Szerda 14:00-16:00</idopont>
+      <oktato>Dr. Sasvári Péter</oktato>
+    </kurzus>
+    <kurzus id="GEMAK234-B" jovahagyas="igen">
+      <kurzusnev>Mesterséges Intellegencia</kurzusnev>
+      <kredit>5</kredit>
+      <hely>A1. 216</hely>
+      <idopont>Kedd 10:00-14:00</idopont>
+      <oktato>Fazekas Levente</oktato>
+    </kurzus>
+    <kurzus id="GEIAL332-B">
+      <kurzusnev>Adatkezelés XML környezetben</kurzusnev>
+      <kredit>5</kredit>
+      <hely>XXXII.</hely>
+      <idopont>Szerda 08:00-11:30</idopont>
+      <oktato>Dr. Bednarik László</oktato>
+    </kurzus>
+  </kurzusok>
+</VTJ4ES_kurzusfelvetel>
