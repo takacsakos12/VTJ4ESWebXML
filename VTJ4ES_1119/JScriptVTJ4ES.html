@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>JSON parser</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h3>Neptunkód Órarend 2025</h3>
+
+        <div>Válassza ki a feldolgozandó JSON fájlt!</div>
+        <input type="file" accept=".json" id="file-in">
+
+        <h3>Beolvasott adatok:</h3>
+        <div id="data"></div>
+
+    </body>
+
+    <script>
+
+        const dataDiv = document.getElementById("data");
+        const fileInput = document.getElementById("file-in");
+
+        fileInput.addEventListener("change", handleFileSelect);
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const jsonText = e.target.result;
+                    writeData(jsonText);
+                };
+
+                reader.readAsText(file);
+            }
+        }
+        function writeData(json) {
+            try {
+                const obj = JSON.parse(json);
+
+                dataDiv.innerHTML = "";
+
+                if (Array.isArray(obj)) {
+                    obj.forEach(item => printObject(item));
+                } 
+                else {
+                    printObject(obj);
+                }
+
+            } catch (error) {
+                dataDiv.innerHTML = "Hibás JSON fájl!";
+            }
+        }
+
+        function printObject(o) {
+    for (let key in o) {
+
+        const value = o[key];
+        if (typeof value === "object" && value !== null) {
+            const title = document.createElement("h4");
+            title.textContent = key + ":";
+            dataDiv.appendChild(title);
+
+            if (Array.isArray(value)) {
+                value.forEach(item => printObject(item));
+            } 
+            else {
+                printObject(value);
+            }
+
+        } else {
+            const p = document.createElement("p");
+            p.textContent = key + ": " + value;
+            dataDiv.appendChild(p);
+        }
+    }
+
+    dataDiv.appendChild(document.createElement("hr"));
+}
+
+
+    </script>
+</html>

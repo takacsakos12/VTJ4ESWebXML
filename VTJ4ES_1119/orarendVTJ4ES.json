@@ -1,0 +1,110 @@
+{
+	"VTJ4ES_orarend": {
+		"ora": [
+			{
+				"targy": "Számítógép hálózatok",
+				"idopont": {
+					"nap": "Hétfő",
+					"tol": "08:00",
+					"ig": "09:30"
+				},
+				"helyszin": "032",
+				"oktato": "dr. Kovács Szilveszter",
+				"szak": "Programtervező Informatikus",
+				"_id": "1",
+				"_tipus": "elmelet"
+			},
+			{
+				"targy": "Mesterséges Intellegencia Alapjai",
+				"idopont": {
+					"nap": "Kedd",
+					"tol": "10:00",
+					"ig": "11:30"
+				},
+				"helyszin": "033",
+				"oktato": "Fazekas Levente",
+				"szak": "Programtervező Informatikus",
+				"_id": "2",
+				"_tipus": "elmelet"
+			},
+			{
+				"targy": "Mesterséges Intellegencia Alapjai",
+				"idopont": {
+					"nap": "Kedd",
+					"tol": "12:00",
+					"ig": "13:30"
+				},
+				"helyszin": "033",
+				"oktato": "Fazekas Levente",
+				"szak": "Programtervező Informatikus",
+				"_id": "3",
+				"_tipus": "gyakorlat"
+			},
+			{
+				"targy": "Adatkezelés XML-ben",
+				"idopont": {
+					"nap": "Szerda",
+					"tol": "08:00",
+					"ig": "09:30"
+				},
+				"helyszin": "A/1 310",
+				"oktato": "dr. Kovács János",
+				"szak": "Programtervező Informatikus",
+				"_id": "4",
+				"_tipus": "elmélet"
+			},
+			{
+				"targy": "Adatkezelés XML-ben",
+				"idopont": {
+					"nap": "Szerda",
+					"tol": "10:00",
+					"ig": "11:30"
+				},
+				"helyszin": "L103",
+				"oktato": "dr. Bednarik László",
+				"szak": "Programtervező Informatikus",
+				"_id": "5",
+				"_tipus": "gyakorlat"
+			},
+			{
+				"targy": "Vállalati Információs Rendszerek Fejlesztése",
+				"idopont": {
+					"nap": "Szerda",
+					"tol": "14:00",
+					"ig": "15:30"
+				},
+				"helyszin": "L103",
+				"oktato": "dr. Sasvári Péter",
+				"szak": "Programtervező Informatikus",
+				"_id": "6",
+				"_tipus": "elmelet"
+			},
+			{
+				"targy": "Vállalati Információs Rendszerek Fejlesztése",
+				"idopont": {
+					"nap": "Szerda",
+					"tol": "18:00",
+					"ig": "19:30"
+				},
+				"helyszin": "L103",
+				"oktato": "dr. Sasvári Péter",
+				"szak": "Programtervező Informatikus",
+				"_id": "7",
+				"_tipus": "gyakorlat"
+			},
+			{
+				"targy": "Számítógépes hálózatok",
+				"idopont": {
+					"nap": "Csütörtök",
+					"tol": "10:00",
+					"ig": "11:30"
+				},
+				"helyszin": "33",
+				"oktato": "dr. Kovács Szilveszter",
+				"szak": "Programtervező Informatikus",
+				"_id": "8",
+				"_tipus": "gyakorlat"
+			}
+		]
+	}
+}
