@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Egyszerű típusok -->
+    <xs:simpleType name="idType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="priceType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="capacityType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="shortStringType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="50"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="degreeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="regional"/>
+            <xs:enumeration value="national"/>
+            <xs:enumeration value="international"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="weekdayType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Monday"/>
+            <xs:enumeration value="Friday"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Összetett típusok -->
+
+    <!-- Személynév -->
+    <xs:complexType name="NameType">
+        <xs:sequence>
+            <xs:element name="first_name" type="shortStringType"/>
+            <xs:element name="last_name" type="shortStringType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Kapcsolattartás -->
+    <xs:complexType name="ContactsType">
+        <xs:sequence>
+            <xs:element name="e_mail" type="xs:string"/>
+            <xs:element name="phone_number" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Helyszín profil -->
+    <xs:complexType name="LocationProfileType">
+        <xs:sequence>
+            <xs:element name="surface" type="shortStringType"/>
+            <xs:element name="profile_text" type="shortStringType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Edzés időbeosztás -->
+    <xs:complexType name="ScheduleType">
+        <xs:sequence>
+            <xs:element name="weekday" type="weekdayType"/>
+            <xs:element name="start_time" type="xs:string"/>
+            <xs:element name="end_time" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Verseny dátum-info -->
+    <xs:complexType name="DateInfoType">
+        <xs:sequence>
+            <xs:element name="date" type="xs:date"/>
+            <xs:element name="start_time" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- AthleteType -->
+    <xs:complexType name="AthleteType">
+        <xs:sequence>
+            <xs:element name="name" type="NameType"/>
+            <xs:element name="birth_date" type="xs:date"/>
+            <xs:element name="contacts" type="ContactsType"/>
+            <!-- többértékű -->
+            <xs:element name="skills" type="shortStringType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="athleteID" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!-- MembershipType -->
+    <xs:complexType name="MembershipType">
+        <xs:sequence>
+            <xs:element name="type" type="shortStringType"/>
+            <xs:element name="monthly_price" type="priceType"/>
+            <!-- többértékű -->
+            <xs:element name="benefits" type="shortStringType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="membershipID" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!-- CoachType -->
+    <xs:complexType name="CoachType">
+        <xs:sequence>
+            <xs:element name="name" type="NameType"/>
+            <xs:element name="experience_years" type="xs:integer"/>
+            <!-- többértékű -->
+            <xs:element name="specializations" type="shortStringType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="coachID" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!-- LocationType -->
+    <xs:complexType name="LocationType">
+        <xs:sequence>
+            <xs:element name="name" type="shortStringType"/>
+            <xs:element name="capacity" type="capacityType"/>
+            <xs:element name="profile" type="LocationProfileType"/>
+            <!-- többértékű -->
+            <xs:element name="equipment" type="shortStringType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="locationID" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!-- TrainingGroupType -->
+    <xs:complexType name="TrainingGroupType">
+        <xs:sequence>
+            <xs:element name="sport" type="shortStringType"/>
+            <xs:element name="level" type="shortStringType"/>
+            <xs:element name="name" type="shortStringType"/>
+            <xs:element name="schedule" type="ScheduleType"/>
+        </xs:sequence>
+        <xs:attribute name="groupID" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!-- CompetitionType -->
+    <xs:complexType name="CompetitionType">
+        <xs:sequence>
+            <xs:element name="name" type="shortStringType"/>
+            <xs:element name="degree" type="degreeType"/>
+            <xs:element name="date_info" type="DateInfoType"/>
+        </xs:sequence>
+        <xs:attribute name="compID" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!-- Gyökér elem -->
+    <xs:element name="Sport_Club_VTJ4ES">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Athlete" type="AthleteType" maxOccurs="unbounded"/>
+                <xs:element name="Membership" type="MembershipType" maxOccurs="unbounded"/>
+                <xs:element name="Coach" type="CoachType" maxOccurs="unbounded"/>
+                <xs:element name="Location" type="LocationType" maxOccurs="unbounded"/>
+                <xs:element name="TrainingGroup" type="TrainingGroupType" maxOccurs="unbounded"/>
+                <xs:element name="Competition" type="CompetitionType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <!-- Elsődleges kulcsok -->
+        <xs:key name="athlete_kulcs">
+            <xs:selector xpath="Athlete"/>
+            <xs:field xpath="@athleteID"/>
+        </xs:key>
+
+        <xs:key name="membership_kulcs">
+            <xs:selector xpath="Membership"/>
+            <xs:field xpath="@membershipID"/>
+        </xs:key>
+
+        <xs:key name="coach_kulcs">
+            <xs:selector xpath="Coach"/>
+            <xs:field xpath="@coachID"/>
+        </xs:key>
+
+        <xs:key name="location_kulcs">
+            <xs:selector xpath="Location"/>
+            <xs:field xpath="@locationID"/>
+        </xs:key>
+
+        <xs:key name="group_kulcs">
+            <xs:selector xpath="TrainingGroup"/>
+            <xs:field xpath="@groupID"/>
+        </xs:key>
+
+        <xs:key name="competition_kulcs">
+            <xs:selector xpath="Competition"/>
+            <xs:field xpath="@compID"/>
+        </xs:key>
+
+        <!-- Egy példa keyref: membershipID-k legyenek olyan tartományban,
+             ami létező athleteID érték (1:1 kapcsolat logika illusztrálására) -->
+        <xs:keyref name="membership-athlete_kapcsolat" refer="athlete_kulcs">
+            <xs:selector xpath="Membership"/>
+            <xs:field xpath="@membershipID"/>
+        </xs:keyref>
+
+    </xs:element>
+</xs:schema>
