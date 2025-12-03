@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Sport_Club_VTJ4ES>
+<Sport_Club_VTJ4ES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="VTJ4ES_XMLSchema.xsd">
 
-  <!-- ATHLETE -->
+  <!-- ATHLETE ==================== -->
+
   <Athlete athleteID="1">
     <name>
       <first_name>Dániel</first_name>
@@ -9,7 +11,7 @@
     </name>
     <birth_date>2001-04-10</birth_date>
     <contacts>
-      <e_mail>daniel.kiss@example.com</e_mail>
+      <e_mail>daniel.kiss@gmail.com</e_mail>
       <phone_number>+36-30-111-1111</phone_number>
     </contacts>
     <skills>speed</skills>
@@ -24,7 +26,7 @@
     </name>
     <birth_date>1999-09-21</birth_date>
     <contacts>
-      <e_mail>bence.nagy@example.com</e_mail>
+      <e_mail>bence.nagy@gmail.com</e_mail>
       <phone_number>+36-30-222-2222</phone_number>
     </contacts>
     <skills>strength</skills>
@@ -32,8 +34,24 @@
     <skills>tactics</skills>
   </Athlete>
 
+  <Athlete athleteID="3">
+    <name>
+      <first_name>Áron</first_name>
+      <last_name>Tóth</last_name>
+    </name>
+    <birth_date>2003-11-02</birth_date>
+    <contacts>
+      <e_mail>aron.toth@gmail.com</e_mail>
+      <phone_number>+36-30-333-3333</phone_number>
+    </contacts>
+    <skills>balance</skills>
+    <skills>coordination</skills>
+    <skills>flexibility</skills>
+  </Athlete>
 
-  <!-- MEMBERSHIP -->
+
+  <!--MEMBERSHIP-->
+
   <Membership membershipID="1">
     <type>standard</type>
     <monthly_price>12000</monthly_price>
@@ -50,8 +68,17 @@
     <benefits>massage</benefits>
   </Membership>
 
+  <Membership membershipID="3">
+    <type>vip</type>
+    <monthly_price>25000</monthly_price>
+    <benefits>private_trainer</benefits>
+    <benefits>sauna</benefits>
+    <benefits>towel_service</benefits>
+  </Membership>
 
-  <!-- Coach -->
+
+  <!--COACH-->
+
   <Coach coachID="1">
     <name>
       <first_name>Gábor</first_name>
@@ -74,33 +101,59 @@
     <specializations>endurance_training</specializations>
   </Coach>
 
+  <Coach coachID="3">
+    <name>
+      <first_name>Zsolt</first_name>
+      <last_name>Kovács</last_name>
+    </name>
+    <experience_years>12</experience_years>
+    <specializations>running</specializations>
+    <specializations>speed_training</specializations>
+    <specializations>injury_prevention</specializations>
+  </Coach>
 
-  <!-- Location -->
+
+  <!--LOCATION-->
+
   <Location locationID="1">
     <name>Indoor Basketball Court</name>
     <capacity>60</capacity>
     <profile>
       <surface>parketta</surface>
-      <profile_text>kosárlabdapálya</profile_text>
+      <profile_text>basketball_court</profile_text>
     </profile>
     <equipment>basketball_hoop</equipment>
     <equipment>scoreboard</equipment>
     <equipment>benches</equipment>
   </Location>
+
   <Location locationID="2">
     <name>Outdoor Running Track</name>
     <capacity>120</capacity>
     <profile>
       <surface>synthetic_track</surface>
-      <profile_text>futópálya</profile_text>
+      <profile_text>running_track</profile_text>
     </profile>
     <equipment>hurdles</equipment>
     <equipment>starting_blocks</equipment>
     <equipment>timing_system</equipment>
   </Location>
 
+  <Location locationID="3">
+    <name>Training Hall A</name>
+    <capacity>35</capacity>
+    <profile>
+      <surface>rubber</surface>
+      <profile_text>Gym</profile_text>
+    </profile>
+    <equipment>mats</equipment>
+    <equipment>weights</equipment>
+    <equipment>sound_system</equipment>
+  </Location>
 
-  <!-- TRAINING GROUPS-->
+
+  <!--TRAINING GROUP-->
+
   <TrainingGroup groupID="1">
     <sport>basketball</sport>
     <level>junior</level>
@@ -123,10 +176,22 @@
     </schedule>
   </TrainingGroup>
 
+  <TrainingGroup groupID="3">
+    <sport>gymnastics</sport>
+    <level>intermediate</level>
+    <name>Gym Flex Squad</name>
+    <schedule>
+      <weekday>Wednesday</weekday>
+      <start_time>15:00</start_time>
+      <end_time>17:00</end_time>
+    </schedule>
+  </TrainingGroup>
 
-  <!-- ===== VERSENYEK ===== -->
+
+  <!--COMPETITION-->
+
   <Competition compID="1">
-    <name>Kiss Dániel Sprint Meet</name>
+    <name>Sprint Meet</name>
     <degree>regional</degree>
     <date_info>
       <date>2025-05-10</date>
@@ -135,12 +200,49 @@
   </Competition>
 
   <Competition compID="2">
-    <name>Nagy Bence Basketball Cup</name>
+    <name>Basketball Cup</name>
     <degree>national</degree>
     <date_info>
       <date>2025-06-20</date>
       <start_time>18:00</start_time>
     </date_info>
   </Competition>
+
+  <Competition compID="3">
+    <name>Gymnastics Open</name>
+    <degree>international</degree>
+    <date_info>
+      <date>2025-08-15</date>
+      <start_time>09:00</start_time>
+    </date_info>
+  </Competition>
+
+
+  <!--KAPCSOLATOK-->
+
+  <!-- HasMembership: Athlete – Membership, 1:N (Membership -> Athlete) -->
+  <HasMembership hasMembershipID="1" athleteRef="1" membershipRef="2" joinDate="2024-01-01"/>
+  <HasMembership hasMembershipID="2" athleteRef="2" membershipRef="1" joinDate="2023-09-15"/>
+  <HasMembership hasMembershipID="3" athleteRef="3" membershipRef="3" joinDate="2024-03-10"/>
+
+  <!-- JoinGroup: Athlete – TrainingGroup, N:M -->
+  <JoinGroup joinGroupID="1" athleteRef="1" groupRef="1"/>
+  <JoinGroup joinGroupID="2" athleteRef="2" groupRef="2"/>
+  <JoinGroup joinGroupID="3" athleteRef="3" groupRef="3"/>
+
+  <!-- LeadGroup: Coach – TrainingGroup, 1:N (Coach -> TrainingGroup) -->
+  <LeadGroup leadGroupID="1" coachRef="1" groupRef="1"/>
+  <LeadGroup leadGroupID="2" coachRef="2" groupRef="2"/>
+  <LeadGroup leadGroupID="3" coachRef="3" groupRef="3"/>
+
+  <!-- TakePlaceAt: TrainingGroup – Location, 1:N (Location -> TrainingGroup) -->
+  <TakePlaceAt takePlaceAtID="1" groupRef="1" locationRef="1"/>
+  <TakePlaceAt takePlaceAtID="2" groupRef="2" locationRef="2"/>
+  <TakePlaceAt takePlaceAtID="3" groupRef="3" locationRef="3"/>
+
+  <!-- CompeteIn: Athlete – Competition, N:M -->
+  <CompeteIn competeInID="1" athleteRef="1" compRef="1" placement="2"/>
+  <CompeteIn competeInID="2" athleteRef="2" compRef="2" placement="1"/>
+  <CompeteIn competeInID="3" athleteRef="3" compRef="3" placement="3"/>
 
 </Sport_Club_VTJ4ES>
