@@ -1,0 +1,38 @@
+[
+    {
+      "nev": "Kiss Péter",
+      "evfolyam": "1",
+      "szak": "PTI",
+      "email": "peter.kiss@gti.hu",
+      "neptun": "ABC123"
+    },
+    {
+      "nev": "Nagy Anna",
+      "evfolyam": "2",
+      "szak": "MI",
+      "email": "anna.nagy@gti.hu",
+      "neptun": "XYZ987"
+    },
+    {
+      "nev": "Szabó Márton",
+      "evfolyam": "3",
+      "szak": "PTI",
+      "email": "marton.szabo@gti.hu",
+      "neptun": "QWE456"
+    },
+    {
+      "nev": "Varga Júlia",
+      "evfolyam": "1",
+      "szak": "MI",
+      "email": "julia.varga@gti.hu",
+      "neptun": "RTY852"
+    },
+    {
+      "nev": "Tóth Kristóf",
+      "evfolyam": "4",
+      "szak": "PTI",
+      "email": "kristof.toth@gti.hu",
+      "neptun": "UIO741"
+    }
+  ]
+  

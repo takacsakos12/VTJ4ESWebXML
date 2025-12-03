@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>NEPTUNKÓD Órarend JSON - Lista</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 30px auto;
+            max-width: 600px;
+            border: 1px solid #ddd;
+            background: #f7f7f7;
+            padding: 15px 20px 25px;
+        }
+        h1 {
+            font-size: 18px;
+            margin: 0 0 10px 0;
+        }
+        .top-row {
+            margin-bottom: 10px;
+        }
+        .top-row input[type="file"] {
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 3px 10px;
+            border-radius: 3px;
+            border: 1px solid #999;
+            background: #e0e0e0;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .search-row {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .search-row label {
+            margin-right: 5px;
+        }
+        #targySelect, #targyInput {
+            padding: 3px 6px;
+            font-size: 13px;
+            width: 200px;
+        }
+        .lista-box {
+            margin-top: 10px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 80px;
+            font-size: 13px;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>NEPTUNKÓD Órarend JSON</h1>
+
+    <div class="top-row">
+        <input type="file" id="fileInput" accept=".json">
+        <button id="loadBtn" class="btn">LocalStorage betöltése</button>
+    </div>
+
+    <div class="search-row">
+        <label for="targySelect">Keresés tárgy szerint:</label>
+        <select id="targySelect">
+            <option value="">-- válasszon tárgyat --</option>
+        </select>
+    </div>
+
+    <div id="lista" class="lista-box">
+        Nincsenek adatok…
+    </div>
+</div>
+
+<script>
+    const LS_KEY = "orarend";
+    let orarendData = [];
+
+    // LocalStorage-ból betöltés induláskor
+    window.addEventListener("load", () => {
+        const stored = localStorage.getItem(LS_KEY);
+        if (stored) {
+            try {
+                orarendData = JSON.parse(stored);
+                renderSubjectSelect();
+            } catch {}
+        }
+    });
+
+    // Fájl -> LocalStorage betöltése
+
+// Fájl -> LocalStorage betöltése
+document.getElementById("loadBtn").addEventListener("click", () => {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        if (orarendData.length === 0) {
+            alert("Válasszon ki egy JSON fájlt!");
+        } else {
+            // ha már van adat localStorage-ban, csak kirajzoljuk
+            renderSubjectSelect?.();   // LISTA oldal
+            renderTable?.();           // TÁBLA oldal
+        }
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        try {
+            const raw = JSON.parse(e.target.result);
+
+            // <-- ITT LAPÍTJUK LE A TE STRUKTÚRÁDAT
+            const oraTomb = raw.VTJ4ES_orarend?.ora || [];
+
+            orarendData = oraTomb.map(ora => ({
+                targy: ora.targy,
+                nap: ora.idopont?.nap || "",
+                tol: ora.idopont?.tol || "",
+                ig: ora.idopont?.ig || "",
+                helyszin: ora.helyszin || "",
+                oktato: ora.oktato || "",
+                szak: ora.szak || "",
+                id: ora._id || "",
+                tipus: ora._tipus || ""
+            }));
+
+            localStorage.setItem(LS_KEY, JSON.stringify(orarendData));
+
+            // LISTA oldalon:
+            if (typeof renderSubjectSelect === "function") {
+                renderSubjectSelect();
+            }
+            // TÁBLA oldalon:
+            if (typeof renderTable === "function") {
+                renderTable();
+            }
+
+        } catch {
+            alert("Hibás JSON fájl!");
+        }
+    };
+    reader.readAsText(file);
+});
+
+
+    // Tárgyak legördülő lista feltöltése
+    function renderSubjectSelect() {
+        const select = document.getElementById("targySelect");
+        select.innerHTML = '<option value="">-- válasszon tárgyat --</option>';
+
+        const targyak = [...new Set(orarendData.map(o => o.targy))];
+        targyak.forEach(t => {
+            const opt = document.createElement("option");
+            opt.value = t;
+            opt.textContent = t;
+            select.appendChild(opt);
+        });
+
+        document.getElementById("lista").textContent =
+            orarendData.length === 0 ? "Nincsenek adatok…" : "Válasszon egy tárgyat a listából.";
+    }
+
+    // Ha tárgyat választunk, jelenjen meg a lista
+    document.getElementById("targySelect").addEventListener("change", function () {
+        const targy = this.value;
+        const box = document.getElementById("lista");
+
+        if (!targy) {
+            box.textContent = "Válasszon egy tárgyat a listából.";
+            return;
+        }
+
+        const talalatok = orarendData.filter(o => o.targy === targy);
+        if (talalatok.length === 0) {
+            box.textContent = "Nincs ilyen tárgy az órarendben.";
+            return;
+        }
+
+        // több óra is lehet ugyanazzal a tárggyal
+        const lines = talalatok.map(o =>
+            `${o.targy}\nNap: ${o.nap}\nIdő: ${o.tol} - ${o.ig}\nHelyszín: ${o.helyszin}\nOktató: ${o.oktato}\nSzak: ${o.szak}`
+        );
+
+        box.textContent = lines.join("\n\n");
+    });
+</script>
+
+</body>
+</html>

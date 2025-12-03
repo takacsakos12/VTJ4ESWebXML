@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>NEPTUNKOD Hallgatók</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px 20px 20px;
+            max-width: 450px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .form-row label {
+            width: 90px;              /* bal oldali felirat szélessége */
+            font-size: 13px;
+        }
+
+        .form-row input {
+            flex: 1;
+            padding: 3px 6px;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+        }
+
+        .btn-save {
+            margin-top: 5px;
+            padding: 3px 12px;
+            font-size: 12px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background-color: #449d48;
+        }
+
+        .io-row {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .io-row label {
+            min-width: 140px;
+        }
+
+        .io-row input[type="file"] {
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        .btn-export {
+            padding: 4px 12px;
+            border-radius: 3px;
+            border: 1px solid #4CAF50;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background: #f5f5f5;
+        }
+
+        /* Gombok */
+        .btn {
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-blue {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .btn-blue:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-red {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<h1>NEPTUNKOD Hallgatók</h1>
+
+<h3>Adat bevitel / módosítás</h3>
+
+<div class="form-row">
+    <label>Név:</label>
+    <input type="text" id="nev">
+</div>
+
+<div class="form-row">
+    <label>Évfolyam:</label>
+    <input type="text" id="evfolyam">
+</div>
+
+<div class="form-row">
+    <label>Szak:</label>
+    <input type="text" id="szak">
+</div>
+
+<div class="form-row">
+    <label>Email:</label>
+    <input type="text" id="email">
+</div>
+
+<div class="form-row">
+    <label>Neptun:</label>
+    <input type="text" id="neptun">
+</div>
+
+<button class="btn btn-blue" id="save-btn">Mentés</button>
+<br>
+<br>
+<div class="io-row">
+    <label for="file-out">Export JSON file:</label>
+    <button id="file-out" class="export-btn">Export</button>
+</div>
+
+
+<br>
+
+<div class="io-row">
+    <label for="file-in">Import JSON file:</label>
+    <input type="file" accept=".json" id="file-in">
+</div>
+
+<br>
+
+<table border="1" cellpadding="6" cellspacing="0" style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Név</th>
+                <th>Évfolyam</th>
+                <th>Szak</th>
+                <th>Email</th>
+                <th>Neptun</th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <td colspan="5" class="empty-text">Nincsenek adatok…</td>
+                <td>
+                    <button class="btn btn-blue">Módosít</button>
+                    <button class="btn btn-red">Töröl</button>
+                </td>
+            
+
+        </tbody>
+    </table>
+
+    <script src="VJT4ES_LocStore.js"></script>
+</body>
+</html>

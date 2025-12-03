@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>NEPTUNKÓD Órarend JSON - Táblázat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 30px auto;
+            max-width: 800px;
+        }
+        h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .top-row {
+            margin-bottom: 10px;
+        }
+        .top-row input[type="file"] {
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 3px 10px;
+            border-radius: 3px;
+            border: 1px solid #999;
+            background: #e0e0e0;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+        }
+        th {
+            background: #f5f5f5;
+        }
+        .empty {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>NEPTUNKÓD Órarend JSON</h1>
+
+    <div class="top-row">
+        <input type="file" id="fileInput" accept=".json">
+        <button id="loadBtn" class="btn">LocalStorage betöltése</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tárgy</th>
+                <th>Nap</th>
+                <th>Től</th>
+                <th>Ig</th>
+                <th>Helyszín</th>
+                <th>Oktató</th>
+                <th>Szak</th>
+            </tr>
+        </thead>
+        <tbody id="tablaBody">
+            <tr><td colspan="7" class="empty">Nincsenek adatok…</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const LS_KEY = "orarend";
+    let orarendData = [];
+
+    // LocalStorage-ból betöltés induláskor
+    window.addEventListener("load", () => {
+        const stored = localStorage.getItem(LS_KEY);
+        if (stored) {
+            try {
+                orarendData = JSON.parse(stored);
+                renderTable();
+            } catch {}
+        }
+    });
+
+    // Fájl -> LocalStorage betöltése
+    document.getElementById("loadBtn").addEventListener("click", () => {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+
+        if (!file) {
+            if (orarendData.length === 0) {
+                alert("Válasszon ki egy JSON fájlt!");
+            } else {
+                renderTable();
+            }
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (!Array.isArray(data)) {
+                    alert("A JSON gyökere tömb legyen!");
+                    return;
+                }
+                orarendData = data;
+                localStorage.setItem(LS_KEY, JSON.stringify(orarendData));
+                renderTable();
+            } catch {
+                alert("Hibás JSON fájl!");
+            }
+        };
+        reader.readAsText(file);
+    });
+
+    function renderTable() {
+        const tbody = document.getElementById("tablaBody");
+        tbody.innerHTML = "";
+
+        if (orarendData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="empty">Nincsenek adatok…</td></tr>';
+            return;
+        }
+
+        orarendData.forEach(o => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${o.targy}</td>
+                <td>${o.nap}</td>
+                <td>${o.tol}</td>
+                <td>${o.ig}</td>
+                <td>${o.helyszin}</td>
+                <td>${o.oktato}</td>
+                <td>${o.szak}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+</script>
+
+</body>
+</html>
