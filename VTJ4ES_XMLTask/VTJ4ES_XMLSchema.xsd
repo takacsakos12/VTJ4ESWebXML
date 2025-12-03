@@ -309,19 +309,16 @@
 
         <!--UNIQUE-->
 
-        <!-- Minden Athlete-nek legfeljebb 1 HasMembership rekord -->
         <xs:unique name="oneMembershipPerAthlete">
             <xs:selector xpath="HasMembership"/>
             <xs:field xpath="@athleteRef"/>
         </xs:unique>
 
-        <!-- Minden TrainingGroup-hoz legfeljebb 1 LeadGroup rekord -->
         <xs:unique name="oneCoachPerGroup">
             <xs:selector xpath="LeadGroup"/>
             <xs:field xpath="@groupRef"/>
         </xs:unique>
 
-        <!-- Minden TrainingGroup-ra max 1 TakePlaceAt sor -->
         <xs:unique name="oneLocationPerGroup">
             <xs:selector xpath="TakePlaceAt"/>
             <xs:field xpath="@groupRef"/>

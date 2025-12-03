@@ -220,29 +220,31 @@
 
   <!--KAPCSOLATOK-->
 
-  <!-- HasMembership: Athlete – Membership, 1:N (Membership -> Athlete) -->
-  <HasMembership hasMembershipID="1" athleteRef="1" membershipRef="2" joinDate="2024-01-01"/>
+  <HasMembership hasMembershipID="1" athleteRef="1" membershipRef="1" joinDate="2024-01-01"/>
   <HasMembership hasMembershipID="2" athleteRef="2" membershipRef="1" joinDate="2023-09-15"/>
-  <HasMembership hasMembershipID="3" athleteRef="3" membershipRef="3" joinDate="2024-03-10"/>
+  <HasMembership hasMembershipID="3" athleteRef="3" membershipRef="2" joinDate="2024-03-10"/>
 
-  <!-- JoinGroup: Athlete – TrainingGroup, N:M -->
+  <!-- JoinGroup: Athlete – TrainingGroup, N:M-->
   <JoinGroup joinGroupID="1" athleteRef="1" groupRef="1"/>
-  <JoinGroup joinGroupID="2" athleteRef="2" groupRef="2"/>
-  <JoinGroup joinGroupID="3" athleteRef="3" groupRef="3"/>
+  <JoinGroup joinGroupID="2" athleteRef="1" groupRef="2"/>
+  <JoinGroup joinGroupID="3" athleteRef="2" groupRef="1"/>
+  <JoinGroup joinGroupID="4" athleteRef="3" groupRef="2"/>
 
-  <!-- LeadGroup: Coach – TrainingGroup, 1:N (Coach -> TrainingGroup) -->
+  <!-- LeadGroup: Coach – TrainingGroup, 1:N (Coach -> TrainingGroup)-->
   <LeadGroup leadGroupID="1" coachRef="1" groupRef="1"/>
-  <LeadGroup leadGroupID="2" coachRef="2" groupRef="2"/>
-  <LeadGroup leadGroupID="3" coachRef="3" groupRef="3"/>
+  <LeadGroup leadGroupID="2" coachRef="1" groupRef="2"/>
+  <LeadGroup leadGroupID="3" coachRef="2" groupRef="3"/>
 
-  <!-- TakePlaceAt: TrainingGroup – Location, 1:N (Location -> TrainingGroup) -->
+  <!-- TakePlaceAt: TrainingGroup – Location, 1:N (Location -> TrainingGroup)-->
   <TakePlaceAt takePlaceAtID="1" groupRef="1" locationRef="1"/>
   <TakePlaceAt takePlaceAtID="2" groupRef="2" locationRef="2"/>
-  <TakePlaceAt takePlaceAtID="3" groupRef="3" locationRef="3"/>
+  <TakePlaceAt takePlaceAtID="3" groupRef="3" locationRef="1"/>
 
-  <!-- CompeteIn: Athlete – Competition, N:M -->
+  <!-- CompeteIn: Athlete – Competition, N:M-->
   <CompeteIn competeInID="1" athleteRef="1" compRef="1" placement="2"/>
-  <CompeteIn competeInID="2" athleteRef="2" compRef="2" placement="1"/>
-  <CompeteIn competeInID="3" athleteRef="3" compRef="3" placement="3"/>
+  <CompeteIn competeInID="2" athleteRef="1" compRef="2" placement="1"/>
+  <CompeteIn competeInID="3" athleteRef="2" compRef="1" placement="3"/>
+  <CompeteIn competeInID="4" athleteRef="2" compRef="2" placement="2"/>
+  <CompeteIn competeInID="5" athleteRef="3" compRef="3" placement="3"/>
 
 </Sport_Club_VTJ4ES>
