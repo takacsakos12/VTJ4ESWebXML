@@ -1,0 +1,64 @@
+{
+    "tulajdonosok": [
+      {
+        "id": 1,
+        "nev": "Kiss Péter",
+        "varos": "Miskolc",
+        "cim": "Egyetemváros 12.",
+        "tel": "+36 30 123 4567"
+      },
+      {
+        "id": 2,
+        "nev": "Nagy Anna",
+        "varos": "Budapest",
+        "cim": "Fő utca 89.",
+        "tel": "+36 70 987 6543"
+      },
+      {
+        "id": 3,
+        "nev": "Szabó Márton",
+        "varos": "Debrecen",
+        "cim": "Bem tér 3.",
+        "tel": "+36 20 654 3210"
+      }
+    ],
+    "autok": [
+      {
+        "id": 1,
+        "rendszam": "ABC-123",
+        "marka": "Toyota",
+        "tipus": "Corolla",
+        "szin": "Fehér",
+        "evjarat": "2018",
+        "tulajId": 1
+      },
+      {
+        "id": 2,
+        "rendszam": "XYZ-987",
+        "marka": "Volkswagen",
+        "tipus": "Golf",
+        "szin": "Kék",
+        "evjarat": "2020",
+        "tulajId": 1
+      },
+      {
+        "id": 3,
+        "rendszam": "MNO-555",
+        "marka": "BMW",
+        "tipus": "320i",
+        "szin": "Fekete",
+        "evjarat": "2017",
+        "tulajId": 2
+      },
+      {
+        "id": 4,
+        "rendszam": "JHK-222",
+        "marka": "Ford",
+        "tipus": "Focus",
+        "szin": "Piros",
+        "evjarat": "2015",
+        "tulajId": 3
+      }
+    ]
+  }
+  
