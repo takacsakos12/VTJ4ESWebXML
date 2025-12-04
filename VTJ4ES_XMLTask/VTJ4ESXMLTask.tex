@@ -1,832 +1,579 @@
 \documentclass[12pt]{report}
-\usepackage[english, magyar]{babel}
-\usepackage{t1enc}
+
+% ===== Kódolás, nyelv =====
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[magyar,english]{babel}
 \frenchspacing
 
+% ===== Oldalbeállítás =====
 \usepackage[margin=2cm, top=5cm, bottom=2.5cm, bindingoffset=0cm]{geometry}
 \usepackage{graphicx}
 
+% ===== Hivatkozások =====
 \usepackage{hyperref}
 \hypersetup{hidelinks}
 
-\usepackage{xcolor,listings}
+% ===== Listings és színek =====
+\usepackage{xcolor}
+\usepackage{listings}
 \usepackage{textcomp}
-\usepackage{color}
-\usepackage{listingsutf8}
 
 \renewcommand{\lstlistingname}{Programkód}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{HTML}{C42043}
-\definecolor{backcolour}{HTML}{F2F2F2}
-\definecolor{bookColor}{cmyk}{0,0,0,0.90}  
-\definecolor{xmltagcolor}{rgb}{0,0,1}
-\definecolor{xmlcommentcolor}{rgb}{0,0.6,0}
-\definecolor{xmlstringcolor}{rgb}{0.6,0,0}
-\color{bookColor}
-\lstset{upquote=true}
+\definecolor{codebg}{rgb}{0.97,0.97,0.97}
+\definecolor{codeborder}{rgb}{0.8,0.8,0.8}
+\definecolor{codekeyword}{rgb}{0,0,0.7}
+\definecolor{codestring}{rgb}{0.6,0,0}
+\definecolor{codecomment}{rgb}{0,0.45,0}
+\definecolor{codenum}{rgb}{0.5,0.5,0.5}
 
-\lstdefinestyle{mystyle}{
-	language=XML,
-	basicstyle=\ttfamily\footnotesize,
-	morestring=[b]",
-	morestring=[s][\color{xmltagcolor}]{<}{>},
-	morecomment=[s][\color{xmlcommentcolor}]{<!--}{-->},
-	showstringspaces=false,
-	breaklines=true,
-	breakatwhitespace=true,
-	tabsize=2,
-	captionpos=b,
-	extendedchars=true,
-	keepspaces=true,
+\lstdefinestyle{basestyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\footnotesize,
+    numberstyle=\tiny\color{codenum},
+    numbers=left,
+    numbersep=8pt,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2,
+    showstringspaces=false,
+    frame=single,
+    framerule=0.3pt,
+    rulecolor=\color{codeborder},
+    captionpos=b,
+    keepspaces=true,
 }
 
-\lstset{style=mystyle}
+\lstdefinelanguage{MyXML}{
+    language=XML,
+    morestring=[b]",
+    morestring=[s][\color{codekeyword}]{<}{>},
+    morecomment=[s][\color{codecomment}]{<!--}{-->},
+    stringstyle=\color{codestring},
+}
 
+\lstdefinelanguage{MyJava}{
+    language=Java,
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment},
+    stringstyle=\color{codestring},
+}
+
+\lstset{style=basestyle}
+
+% ===== Fejléc/lábléc =====
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{
-\fancyhf{}
-\fancyhead[R]{\leftmark}
-\fancyhead[L]{\thepage}
-\fancyfoot[C]{Adatkezelés XML környezetben}}
+  \fancyhf{}
+  \fancyhead[R]{\leftmark}
+  \fancyhead[L]{\thepage}
+  \fancyfoot[C]{Adatkezelés XML környezetben}
+}
 
-\fancyhead[R]{\leftmark}
+\begin{document}
+\pagestyle{fancy}
+\fancyhf{}
 \fancyhead[L]{\thepage}
 \fancyfoot[C]{Adatkezelés XML környezetben}
 
-\begin{document}
-	\pagestyle{fancy}
-	\title{\Huge JEGYZŐKÖNYV \\ \LARGE Adatkezelés XML környezetben}
-	\author{\Large Féléves feladat: Sport Club}
-	\date{\vspace{250px}
-		\begin{flushleft}
-			Készítette: \textbf{Takács Ákos}\\
-			Neptunkód: \textbf{VTJ4ES}\\
-			Dátum: \textbf{2025. 12. 03.}
-		\end{flushleft}
-		\vspace{15px}
-		\begin{center}
-			\textbf{Miskolc, 2025}
-		\end{center}}
-	\maketitle
-	
+\title{\Huge JEGYZŐKÖNYV \\[4pt] \LARGE Adatkezelés XML környezetben}
+\author{\Large Féléves feladat: Sport Club}
+\date{\vspace{250px}
+  \begin{flushleft}
+    Készítette: \textbf{Takács Ákos}\\
+    Neptunkód: \textbf{VTJ4ES}\\
+    Dátum: \textbf{2025. 12. 03.}
+  \end{flushleft}
+  \vspace{15px}
+  \begin{center}
+    \textbf{Miskolc, 2025}
+  \end{center}}
+\maketitle
+
 \tableofcontents
 \clearpage
 
-\fancyhf{}
-\fancyhead[L]{\thepage}
-
 \chapter{A feladat leírása}
 
-A feladat egy sport club (sportegyesület) adatainak modellezése és XML alapú megvalósítása. A rendszerben megjelennek az egyesületi sportolók, az edzők, az edzéscsoportok, a sportlétesítmények, a gyakorlott sportágak, valamint a tagsági viszonyok. A cél egy olyan XML alapú adatleírás kialakítása, amely később Java DOM API segítségével olvasható, módosítható, lekérdezhető és fájlba kiírható.
+A feladat egy sport club (sportegyesület) adatainak modellezése és XML alapú megvalósítása. 
+A rendszerben megjelennek az egyesületi sportolók, az edzők, az edzéscsoportok, a sportlétesítmények, 
+valamint a tagsági viszonyok és versenyek. A cél egy olyan XML alapú adatleírás kialakítása, 
+amelyre XSD séma épül, és amely később Java DOM API segítségével olvasható, módosítható, 
+lekérdezhető és fájlba kiírható.
 
-A tervezés és a megvalósítás során az angol nyelvű elnevezéseket használtam (entitásnevek, elemek, attribútumok), mivel ez a gyakorlat elterjedt a szoftverfejlesztésben.
+A tervezés és a megvalósítás során az angol nyelvű elnevezéseket használtam (entitásnevek, elemek, attribútumok), 
+mivel ez a gyakorlat elterjedt a szoftverfejlesztésben.
 
-Összesen 6 egyedet hoztam létre, melyek a következők:
-
-\begin{itemize}
-	\item Athlete,
-	\item Coach,
-	\item TrainingGroup,
-	\item Facility,
-	\item Sport,
-	\item Membership.
-\end{itemize}
-
-A gyökérből kiinduló központi logikai entitás a \textbf{Sport\_Club\_VTJ4ES} dokumentum, amely tartalmazza a felsorolt entitások példányait.
-
-\textbf{Athlete}: a sportolókat leíró egyed. Elsődleges kulcsa az \texttt{athleteID} attribútum. A sportolóhoz név (vezetéknév, keresztnév), születési dátum, elérhetőségi adatok (e-mail, telefonszám), valamint többértékű \texttt{skills} (pl. speed, endurance, technique) tulajdonság tartozik.
-
-\textbf{Coach}: az edzőket tartalmazó egyed. Elsődleges kulcsa a \texttt{coachID}. Az edző neve, tapasztalati évei, valamint többértékű specializációs lista (\texttt{specializations}) jelenik meg, például \texttt{rehab}, \texttt{mobility}, \texttt{endurance training}.
-
-\textbf{TrainingGroup}: az edzéscsoportokat leíró egyed. Elsődleges kulcsa a \texttt{groupID}. A csoportnak van neve, szintje (pl. beginner, advanced) és egy többértékű \texttt{schedule} tulajdonsága (hét napja, kezdési és befejezési idő). A csoport egy adott edzőhöz, létesítményhez és sportághoz kapcsolódik, ezt az \texttt{coachRef}, \texttt{facilityRef} és \texttt{sportRef} idegen kulcs attribútumok biztosítják.
-
-\textbf{Facility}: a sportlétesítményeket reprezentálja. Elsődleges kulcsa a \texttt{facilityID}. Tartalmaz nevet, címet (irányítószám, város, utca, házszám) és \texttt{capacity} attribútumot, amely a maximális befogadóképességet mutatja.
-
-\textbf{Sport}: a gyakorlott sportágakat leíró egyed. Elsődleges kulcsa a \texttt{sportID}. Tartalmazza a sportág nevét, kategóriáját (pl. combat, team, individual) és egy \texttt{is\_indoor} logikai értéket, amely jelzi, hogy elsősorban beltéri sportágról van-e szó.
-
-\textbf{Membership}: a sportolók és edzéscsoportok közötti \texttt{N:M} kapcsolatot leíró egyed. Elsődleges kulcsa a \texttt{membershipID}. Idegen kulcs attribútumként tárolja az \texttt{athleteRef} és \texttt{groupRef} értékeket, valamint további tulajdonságként a tagság \texttt{start\_date}, \texttt{status} és opcionálisan \texttt{fee} adatait.
-
-Kapcsolatok összefoglalva:
+A végleges modellben az alábbi fő entitások jelentek meg:
 
 \begin{itemize}
-	\item Egy \textbf{Coach} több \textbf{TrainingGroup}-ot is vezethet, de egy csoporthoz pontosan egy edző tartozik: \texttt{Coach~1:N~TrainingGroup}.
-	\item Egy \textbf{Facility} több \textbf{TrainingGroup} edzéseinek helyszíne lehet: \texttt{Facility~1:N~TrainingGroup}.
-	\item Egy \textbf{Sport} több \textbf{TrainingGroup}-hoz is kapcsolódhat: \texttt{Sport~1:N~TrainingGroup}.
-	\item Egy \textbf{Athlete} több \textbf{TrainingGroup}-ban is tag lehet, és egy csoportnak is több sportoló tagja lehet, így \textbf{Membership} közvetíti az \texttt{Athlete} és \texttt{TrainingGroup} közötti \texttt{N:M} kapcsolatot.
+  \item \textbf{Athlete}: sportolók,
+  \item \textbf{Membership}: tagságtípusok,
+  \item \textbf{Coach}: edzők,
+  \item \textbf{Location}: helyszínek,
+  \item \textbf{TrainingGroup}: edzéscsoportok,
+  \item \textbf{Competition}: versenyek.
 \end{itemize}
 
-\chapter{I. feladat - XML/XSD létrehozás}
+A gyökérből kiinduló központi logikai entitás a \textbf{Sport\_Club\_VTJ4ES} dokumentum, amely tartalmazza a felsorolt entitások példányait, valamint a köztük lévő kapcsolat-elemeket (HasMembership, JoinGroup, LeadGroup, TakePlaceAt, CompeteIn).
+
+\chapter{I. feladat – XML/XSD létrehozás}
 
 \section[ER modell]{A feladat ER modellje}
 
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.999\linewidth]{ERVTJ4ES.png}
-	\caption{A sport club ER modellje}
+  \centering
+  \includegraphics[width=0.999\linewidth]{ERVTJ4ES.png}
+  \caption{A sport club ER modellje}
 \end{figure}
 
 \section[XDM modell]{A feladat XDM modellje}
 
-A XDM modell kialakításakor az ER modellben definiált entitásokat és kapcsolatokat kellett átvezetni XML-re. Figyelembe vettem az \texttt{1:1}, \texttt{1:N} és \texttt{N:M} kapcsolatokat, valamint az entitások elsődleges kulcsait.
+Az XDM modell kialakításakor az ER modellben definiált entitásokat és kapcsolatokat kellett átvezetni XML-re. 
+Figyelembe vettem az \texttt{1:1}, \texttt{1:N} és \texttt{N:M} kapcsolatokat, valamint az entitások elsődleges kulcsait.
 
-Az \texttt{1:N} kapcsolatoknál a szaggatott nyíl mindig a ,,több'' oldalon lévő kulcshoz mutat. Például a \textbf{Coach} és \textbf{TrainingGroup} közötti kapcsolat esetén a \texttt{groupID} felől mutat a \texttt{coachID}-re hivatkozó \texttt{coachRef} attribútumhoz. Az \texttt{N:M} kapcsolat (Membership) esetében külön XDM modell (kapcsoló entitás) jelenik meg, amely tartalmazza a saját elsődleges kulcsát és a hivatkozásokat mindkét fő entitásra.
+Az \texttt{1:N} kapcsolatoknál a szaggatott nyíl mindig a „több” oldalon lévő kulcshoz mutat. 
+Például a \textbf{Location} és \textbf{TrainingGroup} közötti kapcsolat esetén a \texttt{groupRef} 
+attribútum mutat vissza a csoport elsődleges kulcsára. Az \texttt{N:M} kapcsolatok (JoinGroup, CompeteIn) 
+esetében külön XDM kapcsolat-elem jelenik meg, amely tartalmazza a saját azonosítóját és a hivatkozásokat 
+mindkét fő entitásra.
 
-Többértékű tulajdonságok (pl. \texttt{skills}, \texttt{specializations}, \texttt{schedule}) XML-ben belső, ismétlődő elemekkel jelennek meg. A XDM modell gyökéreleme: \textbf{Sport\_Club\_VTJ4ES}.
+Többértékű tulajdonságok (pl. \texttt{skills}, \texttt{benefits}, \texttt{equipment}, \texttt{specializations}) 
+XML-ben belső, ismétlődő elemekkel jelennek meg. A XDM modell gyökéreleme: \textbf{Sport\_Club\_VTJ4ES}.
 
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=1.01\linewidth]{XDMVTJ4ES.png}
-	\caption{A sport club XDM modellje}
+  \centering
+  \includegraphics[width=1.01\linewidth]{XDMVTJ4ES.png}
+  \caption{A sport club XDM modellje}
 \end{figure}
 
-\section[Az XML dokumentum]{Az XDM modell alapján XML dokumentum készítése}
+\section[Az XML dokumentum]{Az XML dokumentum tervezése és példák}
 
-Az \texttt{Sport\_Club\_VTJ4ES.xml} dokumentum \texttt{XML 1.0} szabvány szerint készült, \texttt{UTF--8} kódolással. A dokumentum tetején hivatkozom az XSD sémára, amely a szerkezetet és a típusmegkötéseket írja le.
+Az XML-dokumentum a sportegyesület XDM-modelljének megfelelően készült, ahol minden fő entitás 
+(Athlete, Membership, Coach, Location, TrainingGroup, Competition) önálló XML-elemként jelenik meg, 
+az azonosítók pedig attribútumként szerepelnek. Az összetett attribútumok (például név és elérhetőség) 
+külön gyermekelemekben helyezkednek el, míg a többértékű tulajdonságok (skills, benefits, equipment, 
+specializations) ismétlődő elemek formájában jelennek meg. A kapcsolatok külön kapcsolat-elemekkel 
+kerülnek leírásra (HasMembership, JoinGroup, LeadGroup, TakePlaceAt, CompeteIn), amelyek az érintett 
+entitások azonosítóira hivatkozó \texttt{Ref} attribútumokat tartalmaznak, így egyértelműen modellezik 
+az 1--N és N--M kapcsolatokat is.
 
-\begin{lstlisting}[caption={A sport club XML dokumentum}]
-<?xml version="1.0" encoding="UTF-8"?>
+\subsection*{Példa egy entitás XML-leképezésére (Athlete)}
 
-<Sport_Club_VTJ4ES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:noNamespaceSchemaLocation="SportClub_VTJ4ES.xsd">
-
-  <!-- ATHLETE peldanyok -->
-  <Athlete athleteID="1">
+\begin{lstlisting}[language=MyXML, caption={Athlete entitás XML-részlete}]
+<Athlete athleteID="1">
     <name>
-      <first_name>Daniel</first_name>
-      <last_name>Kiss</last_name>
+        <first_name>Daniel</first_name>
+        <last_name>Kiss</last_name>
     </name>
     <birth_date>2001-04-10</birth_date>
     <contacts>
-      <e_mail>daniel.kiss@example.com</e_mail>
-      <phone_number>+36-30-111-1111</phone_number>
+        <e_mail>daniel.kiss@example.com</e_mail>
+        <phone_number>+36-30-111-1111</phone_number>
     </contacts>
     <skills>speed</skills>
     <skills>endurance</skills>
     <skills>technique</skills>
-  </Athlete>
-
-  <Athlete athleteID="2">
-    <name>
-      <first_name>Bence</first_name>
-      <last_name>Nagy</last_name>
-    </name>
-    <birth_date>1999-09-21</birth_date>
-    <contacts>
-      <e_mail>bence.nagy@example.com</e_mail>
-      <phone_number>+36-30-222-2222</phone_number>
-    </contacts>
-    <skills>strength</skills>
-    <skills>agility</skills>
-  </Athlete>
-
-  <Athlete athleteID="3">
-    <name>
-      <first_name>Eszter</first_name>
-      <last_name>Kazai</last_name>
-    </name>
-    <birth_date>2003-02-15</birth_date>
-    <contacts>
-      <e_mail>eszter.kazai@example.com</e_mail>
-      <phone_number>+36-30-333-3333</phone_number>
-    </contacts>
-    <skills>technique</skills>
-  </Athlete>
-
-  <!-- COACH peldanyok -->
-  <Coach coachID="1">
-    <name>
-      <first_name>Laszlo</first_name>
-      <last_name>Kovacs</last_name>
-    </name>
-    <experience_years>15</experience_years>
-    <specializations>
-      <specialization>boxing</specialization>
-      <specialization>kickboxing</specialization>
-    </specializations>
-  </Coach>
-
-  <Coach coachID="2">
-    <name>
-      <first_name>Janos</first_name>
-      <last_name>Toth</last_name>
-    </name>
-    <experience_years>8</experience_years>
-    <specializations>
-      <specialization>muay thai</specialization>
-      <specialization>conditioning</specialization>
-    </specializations>
-  </Coach>
-
-  <Coach coachID="3">
-    <name>
-      <first_name>Anna</first_name>
-      <last_name>Balogh</last_name>
-    </name>
-    <experience_years>6</experience_years>
-    <specializations>
-      <specialization>judo</specialization>
-    </specializations>
-  </Coach>
-
-  <!-- FACILITY peldanyok -->
-  <Facility facilityID="1">
-    <name>Central Gym Hall</name>
-    <address>
-      <post_code>3527</post_code>
-      <city>Miskolc</city>
-      <street>Sport utca</street>
-      <number>10</number>
-    </address>
-    <capacity>120</capacity>
-  </Facility>
-
-  <Facility facilityID="2">
-    <name>Boxing Room</name>
-    <address>
-      <post_code>3525</post_code>
-      <city>Miskolc</city>
-      <street>Kossuth utca</street>
-      <number>5</number>
-    </address>
-    <capacity>40</capacity>
-  </Facility>
-
-  <Facility facilityID="3">
-    <name>Conditioning Hall</name>
-    <address>
-      <post_code>3529</post_code>
-      <city>Miskolc</city>
-      <street>Edzo ter</street>
-      <number>2</number>
-    </address>
-    <capacity>60</capacity>
-  </Facility>
-
-  <!-- SPORT peldanyok -->
-  <Sport sportID="1">
-    <name>Boxing</name>
-    <category>combat</category>
-    <is_indoor>true</is_indoor>
-  </Sport>
-
-  <Sport sportID="2">
-    <name>Kickboxing</name>
-    <category>combat</category>
-    <is_indoor>true</is_indoor>
-  </Sport>
-
-  <Sport sportID="3">
-    <name>Judo</name>
-    <category>combat</category>
-    <is_indoor>true</is_indoor>
-  </Sport>
-
-  <!-- TRAININGGROUP peldanyok -->
-  <TrainingGroup groupID="1" coachRef="1" facilityRef="2" sportRef="1">
-    <name>Beginner Boxing</name>
-    <level>beginner</level>
-    <schedule>
-      <session day="Monday" from="18:00" to="19:30"/>
-      <session day="Wednesday" from="18:00" to="19:30"/>
-    </schedule>
-  </TrainingGroup>
-
-  <TrainingGroup groupID="2" coachRef="2" facilityRef="1" sportRef="2">
-    <name>Advanced Kickboxing</name>
-    <level>advanced</level>
-    <schedule>
-      <session day="Tuesday" from="19:00" to="20:30"/>
-      <session day="Thursday" from="19:00" to="20:30"/>
-    </schedule>
-  </TrainingGroup>
-
-  <TrainingGroup groupID="3" coachRef="3" facilityRef="3" sportRef="3">
-    <name>Judo Juniors</name>
-    <level>intermediate</level>
-    <schedule>
-      <session day="Friday" from="17:00" to="18:30"/>
-    </schedule>
-  </TrainingGroup>
-
-  <!-- MEMBERSHIP peldanyok (N:M kapcsolat Athlete es TrainingGroup kozott) -->
-  <Membership membershipID="1" athleteRef="1" groupRef="1">
-    <start_date>2024-01-10</start_date>
-    <status>active</status>
-    <fee>15000</fee>
-  </Membership>
-
-  <Membership membershipID="2" athleteRef="2" groupRef="2">
-    <start_date>2023-09-01</start_date>
-    <status>active</status>
-    <fee>18000</fee>
-  </Membership>
-
-  <Membership membershipID="3" athleteRef="3" groupRef="1">
-    <start_date>2024-03-15</start_date>
-    <status>pending</status>
-    <fee>15000</fee>
-  </Membership>
-
-</Sport_Club_VTJ4ES>
+</Athlete>
 \end{lstlisting}
+
+Az \texttt{Athlete} elem egy adatbázisbeli táblának felel meg, ahol az \texttt{athleteID} attribútum jelöli az elsődleges kulcsot. 
+A név összetett attribútumként önálló \texttt{<name>} elemben szerepel, a keresztnév és vezetéknév külön gyermekelemekben. 
+A többértékű \texttt{skills} attribútumot ismétlődő \texttt{<skills>} elemek reprezentálják, így egy sportolóhoz több készség is 
+hozzárendelhető.
+
+\subsection*{Példa 1--N kapcsolat XML-es ábrázolására (Athlete–Membership)}
+
+\begin{lstlisting}[language=MyXML, caption={HasMembership kapcsolat (Athlete–Membership)}]
+<HasMembership hasMembershipID="1" athleteRef="1" membershipRef="1" joinDate="2024-01-01"/>
+<HasMembership hasMembershipID="2" athleteRef="2" membershipRef="1" joinDate="2023-09-15"/>
+<HasMembership hasMembershipID="3" athleteRef="3" membershipRef="2" joinDate="2024-03-10"/>
+\end{lstlisting}
+
+Az \texttt{HasMembership} elemek az Athlete és Membership entitások közötti 1--N kapcsolatot írják le. 
+Az \texttt{athleteRef} és \texttt{membershipRef} attribútumok az érintett sportoló és tagság elsődleges kulcsaira hivatkoznak, 
+míg a \texttt{joinDate} a belépés dátumát tárolja.
+
+\subsection*{Példa N--M kapcsolat XML-es ábrázolására (Athlete–TrainingGroup)}
+
+\begin{lstlisting}[language=MyXML, caption={JoinGroup kapcsolat (Athlete–TrainingGroup)}]
+<JoinGroup joinGroupID="1" athleteRef="1" groupRef="1"/>
+<JoinGroup joinGroupID="2" athleteRef="1" groupRef="2"/>
+<JoinGroup joinGroupID="3" athleteRef="2" groupRef="1"/>
+<JoinGroup joinGroupID="4" athleteRef="3" groupRef="2"/>
+\end{lstlisting}
+
+A \texttt{JoinGroup} kapcsolat-elem az Athlete és TrainingGroup közötti N--M kapcsolatot modellezi. 
+Az \texttt{athleteRef} és \texttt{groupRef} attribútumok az Athlete és TrainingGroup entitások azonosítóira mutatnak, 
+így egy XML „kapcsolótáblát” kapunk, amelyben ugyanaz a sportoló több csoportban is szerepelhet, és egy csoporthoz több sportoló is tartozhat.
 
 \clearpage
 
 \section{Az XML dokumentum alapján XMLSchema készítése}
 
-Az \texttt{SportClub\_VTJ4ES.xsd} séma írja le a sport club XML dokumentum szerkezetét és a megkötéseket. Meghatározza az egyszerű és összetett típusokat, az elsődleges kulcsokat (\texttt{xs:key}) és az idegen kulcs hivatkozásokat (\texttt{xs:keyref}).
+Az XSD séma a sportegyesület XML-adatmodelljének formális leírását adja, amely biztosítja az adatok szerkezetének, 
+adattípusainak és kapcsolatainak érvényességét. Az egyszerű típusok (például \texttt{idType}, \texttt{moneyType}, 
+\texttt{timeHMType}, \texttt{placementType}) segítségével biztosított az azonosítók, pénzösszegek, időformátumok 
+és helyezések tartományellenőrzése. Ezekre épülnek a közös komplex típusok (\texttt{NameType}, \texttt{ContactsType}, 
+\texttt{ProfileType}, \texttt{ScheduleType}), valamint az egyes entitástípusok (\texttt{AthleteType}, 
+\texttt{MembershipType}, \texttt{CoachType}, \texttt{LocationType}, \texttt{TrainingGroupType}, \texttt{CompetitionType}).  
+A kapcsolatokhoz külön komplex típusok készültek (\texttt{HasMembershipType}, \texttt{JoinGroupType}, \texttt{LeadGroupType}, 
+\texttt{TakePlaceAtType}, \texttt{CompeteInType}), amelyek attribútumként tárolják az érintett entitások azonosítóira mutató 
+hivatkozásokat. A \texttt{Sport\_Club\_VTJ4ES} gyökérelem alatt globális elemek sorozata jelenik meg, és 
+\texttt{xs:key} / \texttt{xs:keyref} segítségével kerültek definiálásra az elsődleges kulcsok és idegen kulcsok, 
+míg \texttt{xs:unique} elemek további egyediségi megszorításokat valósítanak meg.
 
-\begin{lstlisting}[caption={A sport club XSD dokumentum}]
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+\subsection*{Példa entitás XSD-leképezésére (AthleteType)}
 
-  <!-- Egyedi egyszeru tipusok -->
-  <xs:simpleType name="dateType">
-    <xs:restriction base="xs:date">
-      <xs:minInclusive value="1980-01-01"/>
-      <xs:maxInclusive value="2010-12-31"/>
+\begin{lstlisting}[language=MyXML, caption={AthleteType komplex típus XSD-ben}]
+<xs:simpleType name="idType">
+    <xs:restriction base="xs:integer">
+        <xs:minInclusive value="1"/>
     </xs:restriction>
-  </xs:simpleType>
+</xs:simpleType>
 
-  <xs:simpleType name="sexType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="M"/>
-      <xs:enumeration value="F"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- ATHLETE osszetett tipus -->
-  <xs:complexType name="athleteType">
+<xs:complexType name="NameType">
     <xs:sequence>
-      <xs:element name="name">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="first_name" type="xs:string"/>
-            <xs:element name="last_name" type="xs:string"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="birth_date" type="dateType"/>
-      <xs:element name="contacts">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="e_mail" type="xs:string"/>
-            <xs:element name="phone_number" type="xs:string"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="skills" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="first_name" type="xs:string"/>
+        <xs:element name="last_name" type="xs:string"/>
     </xs:sequence>
-    <xs:attribute name="athleteID" type="xs:integer" use="required"/>
-  </xs:complexType>
+</xs:complexType>
 
-  <!-- COACH osszetett tipus -->
-  <xs:complexType name="coachType">
+<xs:complexType name="AthleteType">
     <xs:sequence>
-      <xs:element name="name">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="first_name" type="xs:string"/>
-            <xs:element name="last_name" type="xs:string"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="experience_years" type="xs:integer"/>
-      <xs:element name="specializations">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="specialization" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+        <xs:element name="name" type="NameType"/>
+        <xs:element name="birth_date" type="xs:string"/>
+        <xs:element name="contacts" type="ContactsType"/>
+        <xs:element name="skills" type="xs:string" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="coachID" type="xs:integer" use="required"/>
-  </xs:complexType>
+    <xs:attribute name="athleteID" type="idType" use="required"/>
+</xs:complexType>
 
-  <!-- FACILITY osszetett tipus -->
-  <xs:complexType name="facilityType">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="address">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="post_code" type="xs:string"/>
-            <xs:element name="city" type="xs:string"/>
-            <xs:element name="street" type="xs:string"/>
-            <xs:element name="number" type="xs:string"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="capacity" type="xs:integer"/>
-    </xs:sequence>
-    <xs:attribute name="facilityID" type="xs:integer" use="required"/>
-  </xs:complexType>
-
-  <!-- SPORT osszetett tipus -->
-  <xs:complexType name="sportType">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="category" type="xs:string"/>
-      <xs:element name="is_indoor" type="xs:boolean"/>
-    </xs:sequence>
-    <xs:attribute name="sportID" type="xs:integer" use="required"/>
-  </xs:complexType>
-
-  <!-- TRAININGGROUP osszetett tipus -->
-  <xs:complexType name="trainingGroupType">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="level" type="xs:string"/>
-      <xs:element name="schedule">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="session" minOccurs="1" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:attribute name="day" type="xs:string" use="required"/>
-                <xs:attribute name="from" type="xs:string" use="required"/>
-                <xs:attribute name="to" type="xs:string" use="required"/>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="groupID" type="xs:integer" use="required"/>
-    <xs:attribute name="coachRef" type="xs:integer" use="required"/>
-    <xs:attribute name="facilityRef" type="xs:integer" use="required"/>
-    <xs:attribute name="sportRef" type="xs:integer" use="required"/>
-  </xs:complexType>
-
-  <!-- MEMBERSHIP osszetett tipus (N:M kapcsolat) -->
-  <xs:complexType name="membershipType">
-    <xs:sequence>
-      <xs:element name="start_date" type="xs:date"/>
-      <xs:element name="status" type="xs:string"/>
-      <xs:element name="fee" type="xs:integer" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="membershipID" type="xs:integer" use="required"/>
-    <xs:attribute name="athleteRef" type="xs:integer" use="required"/>
-    <xs:attribute name="groupRef" type="xs:integer" use="required"/>
-  </xs:complexType>
-
-  <!-- GYOKERELEM komplex tipus -->
-  <xs:complexType name="clubType">
-    <xs:sequence>
-      <xs:element name="Athlete" type="athleteType" minOccurs="1" maxOccurs="unbounded"/>
-      <xs:element name="Coach" type="coachType" minOccurs="1" maxOccurs="unbounded"/>
-      <xs:element name="Facility" type="facilityType" minOccurs="1" maxOccurs="unbounded"/>
-      <xs:element name="Sport" type="sportType" minOccurs="1" maxOccurs="unbounded"/>
-      <xs:element name="TrainingGroup" type="trainingGroupType" minOccurs="1" maxOccurs="unbounded"/>
-      <xs:element name="Membership" type="membershipType" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- GYOKERELEM definicioja -->
-  <xs:element name="Sport_Club_VTJ4ES" type="clubType">
-
-    <!-- KEY-k -->
-    <xs:key name="AthleteKey">
-      <xs:selector xpath="Athlete"/>
-      <xs:field xpath="@athleteID"/>
-    </xs:key>
-
-    <xs:key name="CoachKey">
-      <xs:selector xpath="Coach"/>
-      <xs:field xpath="@coachID"/>
-    </xs:key>
-
-    <xs:key name="FacilityKey">
-      <xs:selector xpath="Facility"/>
-      <xs:field xpath="@facilityID"/>
-    </xs:key>
-
-    <xs:key name="SportKey">
-      <xs:selector xpath="Sport"/>
-      <xs:field xpath="@sportID"/>
-    </xs:key>
-
-    <xs:key name="TrainingGroupKey">
-      <xs:selector xpath="TrainingGroup"/>
-      <xs:field xpath="@groupID"/>
-    </xs:key>
-
-    <xs:key name="MembershipKey">
-      <xs:selector xpath="Membership"/>
-      <xs:field xpath="@membershipID"/>
-    </xs:key>
-
-    <!-- KEYREF-ek (idegen kulcsok) -->
-    <xs:keyref name="TrainingGroupCoachRef" refer="CoachKey">
-      <xs:selector xpath="TrainingGroup"/>
-      <xs:field xpath="@coachRef"/>
-    </xs:keyref>
-
-    <xs:keyref name="TrainingGroupFacilityRef" refer="FacilityKey">
-      <xs:selector xpath="TrainingGroup"/>
-      <xs:field xpath="@facilityRef"/>
-    </xs:keyref>
-
-    <xs:keyref name="TrainingGroupSportRef" refer="SportKey">
-      <xs:selector xpath="TrainingGroup"/>
-      <xs:field xpath="@sportRef"/>
-    </xs:keyref>
-
-    <xs:keyref name="MembershipAthleteRef" refer="AthleteKey">
-      <xs:selector xpath="Membership"/>
-      <xs:field xpath="@athleteRef"/>
-    </xs:keyref>
-
-    <xs:keyref name="MembershipGroupRef" refer="TrainingGroupKey">
-      <xs:selector xpath="Membership"/>
-      <xs:field xpath="@groupRef"/>
-    </xs:keyref>
-
-  </xs:element>
-</xs:schema>
+<xs:element name="Athlete" type="AthleteType"/>
 \end{lstlisting}
 
-\chapter{II. feladat - DOM}
+Az \texttt{idType} egyszerű típus biztosítja, hogy az azonosítók mindig 1-nél nagyobb egész számok legyenek. 
+Az \texttt{AthleteType} komplex típus írja le a sportoló entitást: a gyermekelemek között szerepel a név, 
+születési dátum, elérhetőségek és a többértékű \texttt{skills} elem (maxOccurs=\texttt{"unbounded"}). 
+Az \texttt{athleteID} attribútum az entitás elsődleges kulcsát reprezentálja, míg a globális \texttt{Athlete} elem 
+az XML-ben ténylegesen megjelenő elemtípust adja.
 
-\section{Adatolvasás}
+\subsection*{Kapcsolattípus és kulcsok XSD-ben (HasMembership, key, keyref, unique)}
 
-A DOM alapú adatolvasó program Java nyelven készült, és a \texttt{Sport\_Club\_VTJ4ES.xml} állományt dolgozza fel. A DOM parser a teljes XML dokumentumot memóriába tölti, így az egyes elemekhez gyorsan és kényelmesen hozzáférhetünk.
+\begin{lstlisting}[language=MyXML, caption={Kapcsolatok és kulcsok XSD-ben}]
+<xs:complexType name="HasMembershipType">
+    <xs:attribute name="hasMembershipID" type="idType" use="required"/>
+    <xs:attribute name="athleteRef" type="idType" use="required"/>
+    <xs:attribute name="membershipRef" type="idType" use="required"/>
+    <xs:attribute name="joinDate" type="xs:string" use="required"/>
+</xs:complexType>
 
-A program lépései:
+<xs:key name="athlete_key">
+    <xs:selector xpath="Athlete"/>
+    <xs:field xpath="@athleteID"/>
+</xs:key>
+
+<xs:key name="membership_key">
+    <xs:selector xpath="Membership"/>
+    <xs:field xpath="@membershipID"/>
+</xs:key>
+
+<xs:keyref name="hasMembership_athlete_fk" refer="athlete_key">
+    <xs:selector xpath="HasMembership"/>
+    <xs:field xpath="@athleteRef"/>
+</xs:keyref>
+
+<xs:keyref name="hasMembership_membership_fk" refer="membership_key">
+    <xs:selector xpath="HasMembership"/>
+    <xs:field xpath="@membershipRef"/>
+</xs:keyref>
+
+<xs:unique name="oneCoachPerGroup">
+    <xs:selector xpath="LeadGroup"/>
+    <xs:field xpath="@groupRef"/>
+</xs:unique>
+
+<xs:unique name="oneLocationPerGroup">
+    <xs:selector xpath="TakePlaceAt"/>
+    <xs:field xpath="@groupRef"/>
+</xs:unique>
+\end{lstlisting}
+
+A \texttt{HasMembershipType} kapcsolat-típust modellez az Athlete és Membership entitások között, 
+ahol az \texttt{athleteRef} és \texttt{membershipRef} attribútumok idegen kulcsként működnek. 
+Az \texttt{xs:key} elemek az Athlete és Membership elsődleges kulcsait definiálják, 
+míg az \texttt{xs:keyref} gondoskodik arról, hogy a hivatkozott azonosítók valóban létező entitásokra mutassanak. 
+Az \texttt{xs:unique} elemek további üzleti szabályokat valósítanak meg, például azt, hogy egy csoporthoz legfeljebb 
+egy edző (\texttt{LeadGroup}) vagy egy helyszín (\texttt{TakePlaceAt}) tartozhat.
+
+\chapter{II. feladat – DOM alapú feldolgozás}
+
+\section{DOM tervezése és általános működés}
+
+A DOM (Document Object Model) alapú megoldás célja, hogy a korábban megtervezett XML adatmodellt
+Java kódból kényelmesen lehessen bejárni, módosítani és kiírni. A DOM lényege, hogy a
+\texttt{Sport\_Club\_VTJ4ES.xml} dokumentum teljes tartalmát egy fa struktúraként betölti a memóriába:
+minden XML elemhez, attribútumhoz és szöveghez külön \texttt{Node} (illetve \texttt{Element}) objektum tartozik.
+Így a program a fa tetszőleges pontján szabadon tud:
 
 \begin{itemize}
-	\item \texttt{DocumentBuilderFactory} és \texttt{DocumentBuilder} példányosítása.
-	\item A \texttt{Sport\_Club\_VTJ4ES.xml} beolvasása és normalizálása.
-	\item Az egyes entitáslisták beolvasása külön metódusokban: \texttt{readAthletes()}, \texttt{readCoaches()}, \texttt{readFacilities()}, \texttt{readSports()}, \texttt{readTrainingGroups()}, \texttt{readMemberships()}.
-	\item A kiírás XML-szerű formátumban történik a konzolra.
+  \item elemeket keresni (pl. \texttt{getElementsByTagName("Athlete")}),
+  \item attribútumokat és szöveges tartalmakat kiolvasni vagy módosítani,
+  \item új elemeket beszúrni vagy meglévőket törölni,
+  \item a módosított DOM-fát új XML dokumentumként kiírni.
 \end{itemize}
 
-\begin{lstlisting}[caption={DOMReadVTJ4ES.java} adatolvasó program, language=Java]
-import javax.xml.parsers.*;
-import org.xml.sax.SAXException;
-import org.w3c.dom.*;
-import java.io.*;
+A DOM megközelítés előnye, hogy a teljes dokumentum egyszerre, strukturáltan elérhető, ezért ideális
+összetett lekérdezésekhez és többlépéses módosításokhoz. Hátránya, hogy nagyobb XML állomány esetén
+jelentős memóriát foglal. A gyakorlatban ez a feladat méreténél nem okoz gondot, viszont jól szemlélteti
+a fa alapú feldolgozás lépéseit.
 
-public class DOMReadVTJ4ES {
+\bigskip
 
-  public static void main(String[] args) {
-    try {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder builder = factory.newDocumentBuilder();
-      Document document = builder.parse(
-        new File("C:\\projects\\VTJ4ES_XMLGyak\\XMLTaskVTJ4ES\\Sport_Club_VTJ4ES.xml")
-      );
+A DOM megvalósítás négy fő Java osztályra épül:
+\begin{itemize}
+  \item \texttt{VTJ4ESDomRead}: az XML beolvasása és bejárása,
+  \item \texttt{VTJ4ESDomQuery}: lekérdezések futtatása a DOM-fán,
+  \item \texttt{VTJ4ESDomWrite}: a DOM-fa kiírása formázott XML-be,
+  \item \texttt{VTJ4ESDomModify}: az XML-tartalom módosítása DOM-on keresztül.
+\end{itemize}
 
-      document.getDocumentElement().normalize();
-      System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-      System.out.println("<Sport_Club_VTJ4ES>\n");
+\section{VTJ4ESDomRead – Adatolvasás DOM-mal}
 
-      readAthletes(document);
-      readCoaches(document);
-      readFacilities(document);
-      readSports(document);
-      readTrainingGroups(document);
-      readMemberships(document);
+A \texttt{VTJ4ESDomRead} osztály egy DOM-alapú XML-olvasó program, amely a teljes XML dokumentumot 
+memóriába tölti, majd külön metódusokkal (\texttt{readAthletes}, \texttt{readMemberships}, 
+\texttt{readCoaches}, \texttt{readLocations}, \texttt{readTrainingGroups}, \texttt{readCompetitions}) 
+kiolvassa az egyes entitások adatait és strukturált formában a konzolra írja.
 
-      System.out.println("\n</Sport_Club_VTJ4ES>");
-    } catch (ParserConfigurationException | IOException | SAXException e) {
-      e.printStackTrace();
-    }
-  }
+\subsection*{DOM parser inicializálása}
 
-  private static void readAthletes(Document document) {
-    NodeList list = document.getElementsByTagName("Athlete");
-    for (int i = 0; i < list.getLength(); i++) {
-      Node node = list.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) {
+\begin{lstlisting}[language=MyJava, caption={DOM parser létrehozása és dokumentum betöltése}]
+DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+factory.setIgnoringElementContentWhitespace(true);
+DocumentBuilder builder = factory.newDocumentBuilder();
+
+Document document = builder.parse(new File("../VTJ4ES_XML.xml"));
+document.getDocumentElement().normalize();
+\end{lstlisting}
+
+\subsection*{Athlete elemek feldolgozása}
+
+\begin{lstlisting}[language=MyJava, caption={Athlete elemek bejárása VTJ4ESDomRead-ban}]
+NodeList athleteList = document.getElementsByTagName("Athlete");
+for (int i = 0; i < athleteList.getLength(); i++) {
+    Node node = athleteList.item(i);
+    if (node.getNodeType() == Node.ELEMENT_NODE) {
         Element e = (Element) node;
-        String id = e.getAttribute("athleteID");
+
+        String athleteId = e.getAttribute("athleteID");
 
         Element nameElem = (Element) e.getElementsByTagName("name").item(0);
-        String firstName = nameElem.getElementsByTagName("first_name").item(0).getTextContent();
-        String lastName  = nameElem.getElementsByTagName("last_name").item(0).getTextContent();
-
-        String birthDate = e.getElementsByTagName("birth_date").item(0).getTextContent();
-
-        Element contacts = (Element) e.getElementsByTagName("contacts").item(0);
-        String email  = contacts.getElementsByTagName("e_mail").item(0).getTextContent();
-        String phone  = contacts.getElementsByTagName("phone_number").item(0).getTextContent();
-
-        System.out.println("  <Athlete athleteID=\"" + id + "\">");
-        System.out.println("    <name>");
-        printElement("first_name", firstName, 6);
-        printElement("last_name", lastName, 6);
-        System.out.println("    </name>");
-        printElement("birth_date", birthDate, 4);
-        System.out.println("    <contacts>");
-        printElement("e_mail", email, 6);
-        printElement("phone_number", phone, 6);
-        System.out.println("    </contacts>");
-
-        NodeList skills = e.getElementsByTagName("skills");
-        for (int j = 0; j < skills.getLength(); j++) {
-          Node s = skills.item(j);
-          if (s.getNodeType() == Node.ELEMENT_NODE) {
-            printElement("skills", s.getTextContent(), 4);
-          }
-        }
-
-        System.out.println("  </Athlete>");
-      }
+        String firstName = nameElem.getElementsByTagName("first_name")
+                                   .item(0).getTextContent();
+        String lastName = nameElem.getElementsByTagName("last_name")
+                                  .item(0).getTextContent();
     }
-  }
-
-  private static void readCoaches(Document document) {
-    NodeList list = document.getElementsByTagName("Coach");
-    for (int i = 0; i < list.getLength(); i++) {
-      Node node = list.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) {
-        Element e = (Element) node;
-        String id = e.getAttribute("coachID");
-
-        Element nameElem = (Element) e.getElementsByTagName("name").item(0);
-        String firstName = nameElem.getElementsByTagName("first_name").item(0).getTextContent();
-        String lastName  = nameElem.getElementsByTagName("last_name").item(0).getTextContent();
-        String exp       = e.getElementsByTagName("experience_years").item(0).getTextContent();
-
-        System.out.println("  <Coach coachID=\"" + id + "\">");
-        System.out.println("    <name>");
-        printElement("first_name", firstName, 6);
-        printElement("last_name", lastName, 6);
-        System.out.println("    </name>");
-        printElement("experience_years", exp, 4);
-
-        NodeList specsList = ((Element) e
-            .getElementsByTagName("specializations").item(0))
-            .getElementsByTagName("specialization");
-
-        System.out.println("    <specializations>");
-        for (int j = 0; j < specsList.getLength(); j++) {
-          Element se = (Element) specsList.item(j);
-          printElement("specialization", se.getTextContent(), 6);
-        }
-        System.out.println("    </specializations>");
-        System.out.println("  </Coach>");
-      }
-    }
-  }
-
-  private static void readFacilities(Document document) {
-    NodeList list = document.getElementsByTagName("Facility");
-    for (int i = 0; i < list.getLength(); i++) {
-      Node node = list.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) {
-        Element e = (Element) node;
-        String id = e.getAttribute("facilityID");
-        String name = e.getElementsByTagName("name").item(0).getTextContent();
-        String capacity = e.getElementsByTagName("capacity").item(0).getTextContent();
-
-        Element addr = (Element) e.getElementsByTagName("address").item(0);
-        String post  = addr.getElementsByTagName("post_code").item(0).getTextContent();
-        String city  = addr.getElementsByTagName("city").item(0).getTextContent();
-        String street= addr.getElementsByTagName("street").item(0).getTextContent();
-        String num   = addr.getElementsByTagName("number").item(0).getTextContent();
-
-        System.out.println("  <Facility facilityID=\"" + id + "\">");
-        printElement("name", name, 4);
-        System.out.println("    <address>");
-        printElement("post_code", post, 6);
-        printElement("city", city, 6);
-        printElement("street", street, 6);
-        printElement("number", num, 6);
-        System.out.println("    </address>");
-        printElement("capacity", capacity, 4);
-        System.out.println("  </Facility>");
-      }
-    }
-  }
-
-  private static void readSports(Document document) {
-    NodeList list = document.getElementsByTagName("Sport");
-    for (int i = 0; i < list.getLength(); i++) {
-      Node node = list.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) {
-        Element e = (Element) node;
-        String id    = e.getAttribute("sportID");
-        String name  = e.getElementsByTagName("name").item(0).getTextContent();
-        String cat   = e.getElementsByTagName("category").item(0).getTextContent();
-        String indoor= e.getElementsByTagName("is_indoor").item(0).getTextContent();
-
-        System.out.println("  <Sport sportID=\"" + id + "\">");
-        printElement("name", name, 4);
-        printElement("category", cat, 4);
-        printElement("is_indoor", indoor, 4);
-        System.out.println("  </Sport>");
-      }
-    }
-  }
-
-  private static void readTrainingGroups(Document document) {
-    NodeList list = document.getElementsByTagName("TrainingGroup");
-    for (int i = 0; i < list.getLength(); i++) {
-      Node node = list.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) {
-        Element e = (Element) node;
-        String id        = e.getAttribute("groupID");
-        String coachRef  = e.getAttribute("coachRef");
-        String facRef    = e.getAttribute("facilityRef");
-        String sportRef  = e.getAttribute("sportRef");
-        String name      = e.getElementsByTagName("name").item(0).getTextContent();
-        String level     = e.getElementsByTagName("level").item(0).getTextContent();
-
-        System.out.println("  <TrainingGroup groupID=\"" + id
-                           + "\" coachRef=\"" + coachRef
-                           + "\" facilityRef=\"" + facRef
-                           + "\" sportRef=\"" + sportRef + "\">");
-        printElement("name", name, 4);
-        printElement("level", level, 4);
-
-        Element sched = (Element) e.getElementsByTagName("schedule").item(0);
-        NodeList sessions = sched.getElementsByTagName("session");
-        System.out.println("    <schedule>");
-        for (int j = 0; j < sessions.getLength(); j++) {
-          Element s = (Element) sessions.item(j);
-          String day  = s.getAttribute("day");
-          String from = s.getAttribute("from");
-          String to   = s.getAttribute("to");
-          System.out.println("      <session day=\"" + day
-                             + "\" from=\"" + from
-                             + "\" to=\"" + to + "\"/>");
-        }
-        System.out.println("    </schedule>");
-        System.out.println("  </TrainingGroup>");
-      }
-    }
-  }
-
-  private static void readMemberships(Document document) {
-    NodeList list = document.getElementsByTagName("Membership");
-    for (int i = 0; i < list.getLength(); i++) {
-      Node node = list.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) {
-        Element e = (Element) node;
-        String id     = e.getAttribute("membershipID");
-        String athRef = e.getAttribute("athleteRef");
-        String grpRef = e.getAttribute("groupRef");
-        String start  = e.getElementsByTagName("start_date").item(0).getTextContent();
-        String status = e.getElementsByTagName("status").item(0).getTextContent();
-        String fee    = "";
-        if (e.getElementsByTagName("fee").getLength() > 0) {
-          fee = e.getElementsByTagName("fee").item(0).getTextContent();
-        }
-
-        System.out.println("  <Membership membershipID=\"" + id
-                           + "\" athleteRef=\"" + athRef
-                           + "\" groupRef=\"" + grpRef + "\">");
-        printElement("start_date", start, 4);
-        printElement("status", status, 4);
-        if (!fee.isEmpty()) {
-          printElement("fee", fee, 4);
-        }
-        System.out.println("  </Membership>");
-      }
-    }
-  }
-
-  private static void printElement(String name, String content, int indent) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < indent; i++) sb.append(" ");
-    sb.append("<").append(name).append(">")
-      .append(content)
-      .append("</").append(name).append(">");
-    System.out.println(sb.toString());
-  }
 }
 \end{lstlisting}
 
-\section{Adatmódosítás}
+\subsection*{Többértékű skills elemek kezelése}
 
-Az adatmódosító program (DOMModifyVTJ4ES.java) szintén DOM API-t használ. Például a következő módosításokat hajtja végre:
+\begin{lstlisting}[language=MyJava, caption={Többértékű skills elemek kezelése}]
+NodeList skills = e.getElementsByTagName("skills");
+for (int j = 0; j < skills.getLength(); j++) {
+    String skill = skills.item(j).getTextContent();
+    // kiiras vagy tovabbfeldolgozas
+}
+\end{lstlisting}
 
-\begin{itemize}
-	\item Minden \texttt{Athlete} \texttt{athleteID} attribútuma elé \texttt{"ATH\_"} előtag kerül.
-	\item Minden \texttt{TrainingGroup} esetén növeli a logikai befogadóképességet egy \texttt{max\_athletes} attribútummal, fix \texttt{30} értékre.
-	\item A \texttt{Membership} elemek közül az aktív tagságnál (status = \texttt{active}) a \texttt{fee} elemet 10\%-kal megemeli.
-\end{itemize}
+\section{VTJ4ESDomQuery – Adatlekérdezés DOM-mal}
 
-(A forráskód szerkezete megegyező a mintában látott \texttt{DOMModifyKLNSPG} felépítésével, csak a sport club elemekre és attribútumokra van átírva.)
+A \texttt{VTJ4ESDomQuery} osztály DOM-alapú lekérdezéseket valósít meg: 
+szűri a sportolókat bizonyos skillek alapján, megkeresi például a legnagyobb kapacitású 
+helyszínt, vagy lekérdezi a 2000 után született sportolókat. Az eredményeket 
+\texttt{StringBuilder} segítségével XML-szerű kimenetté állítja össze.
 
-\section{Adatlekérdezés}
+\subsection*{Sportolók szűrése skill alapján}
 
-Az adatlekérdező program (DOMQueryVTJ4ES.java) különböző szempontok szerint gyűjti ki az XML-ből az adatokat, például:
+\begin{lstlisting}[language=MyJava, caption={Sportolók szűrése skill alapján}]
+NodeList athleteList = doc.getElementsByTagName("Athlete");
+for (int i = 0; i < athleteList.getLength(); i++) {
+    Node node = athleteList.item(i);
+    if (node.getNodeType() == Node.ELEMENT_NODE) {
+        Element athlete = (Element) node;
 
-\begin{itemize}
-	\item Férfi sportolók listázása (ha a sémában szerepel nem szerinti jelölés).
-	\item A legnagyobb kapacitású \texttt{Facility} kiválasztása.
-	\item 2000 után született \texttt{Athlete}-ek lekérdezése.
-	\item Egy kiválasztott \texttt{TrainingGroup} összes tagságának (\texttt{Membership}) listázása.
-\end{itemize}
+        NodeList skills = athlete.getElementsByTagName("skills");
+        boolean hasSpeed = false;
+        for (int j = 0; j < skills.getLength(); j++) {
+            String skillValue = skills.item(j).getTextContent();
+            if ("speed".equalsIgnoreCase(skillValue)) {
+                hasSpeed = true;
+                break;
+            }
+        }
 
-A kód felépítése hasonló a kapott DOMQuery példához: \texttt{DocumentBuilder}-rel beolvassa a dokumentumot, majd \texttt{getElementsByTagName} és attribútumolvasás segítségével készíti el az XML-szerű kimenetet.
+        if (hasSpeed) {
+            String athleteId = athlete.getAttribute("athleteID");
+            // eredmeny osszegyujtese StringBuilder-be
+        }
+    }
+}
+\end{lstlisting}
 
-\section{Adatírás}
+\subsection*{Legnagyobb kapacitású Location kiválasztása}
 
-Az adatíró program (DOMWriteVTJ4ES.java) a memóriában lévő DOM fát írja ki egy új XML fájlba (pl. \texttt{Sport\_Club\_VTJ4ES\_output.xml}). A \texttt{Transformer} osztály segítségével gondoskodik az olvasható, behúzásokkal formázott kimenetről, hasonlóan a mintában bemutatott \texttt{DOMWriteKLNSPG} programhoz.
+\begin{lstlisting}[language=MyJava, caption={Legnagyobb kapacitású helyszín (Location) kiválasztása}]
+NodeList locationList = doc.getElementsByTagName("Location");
+int maxCapacity = -1;
+Element maxLocation = null;
+
+for (int i = 0; i < locationList.getLength(); i++) {
+    Node node = locationList.item(i);
+    if (node.getNodeType() == Node.ELEMENT_NODE) {
+        Element location = (Element) node;
+        String capacityText = location.getElementsByTagName("capacity")
+                                      .item(0).getTextContent();
+        int capacity = 0;
+        try {
+            capacity = Integer.parseInt(capacityText.trim());
+        } catch (NumberFormatException e) {
+            // ervenytelen ertek figyelmen kivul hagyasa
+        }
+
+        if (capacity > maxCapacity) {
+            maxCapacity = capacity;
+            maxLocation = location;
+        }
+    }
+}
+\end{lstlisting}
+
+\section{VTJ4ESDomWrite – Adatírás DOM-ból XML-be}
+
+A \texttt{VTJ4ESDomWrite} osztály a memóriában lévő DOM fát írja ki formázott XML dokumentumba. 
+A \texttt{Transformer} API segítségével gondoskodik az olvasható, behúzásokkal ellátott kimenetről, 
+mind a konzolra, mind fájlba.
+
+\begin{lstlisting}[language=MyJava, caption={DOM dokumentum kiírása a konzolra}]
+TransformerFactory transformerFactory = TransformerFactory.newInstance();
+Transformer transformer = transformerFactory.newTransformer();
+
+transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+DOMSource source = new DOMSource(doc);
+StreamResult consoleResult = new StreamResult(System.out);
+transformer.transform(source, consoleResult);
+\end{lstlisting}
+
+\begin{lstlisting}[language=MyJava, caption={DOM dokumentum fájlba írása}]
+private static void writeDocumentToFile(Document doc, String filename)
+        throws TransformerException {
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = transformerFactory.newTransformer();
+
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+    DOMSource source = new DOMSource(doc);
+    StreamResult result = new StreamResult(new File(filename));
+    transformer.transform(source, result);
+}
+\end{lstlisting}
+
+\section{VTJ4ESDomModify – Adatmódosítás DOM-mal}
+
+A \texttt{VTJ4ESDomModify} osztály a beolvasott DOM-fát módosítja: például előtagot fűz az 
+\texttt{athleteID} értékekhez, módosítja a tagsági díjakat, minimális kapacitást állít be a 
+helyszíneknél, illetve jelölést ad a \texttt{profile\_text} végére. A módosítások után 
+a frissített dokumentum formázott XML-ként kerül kiírásra.
+
+\subsection*{Módosítások végrehajtása és kiírása}
+
+\begin{lstlisting}[language=MyJava, caption={Módosítások végrehajtása és kiírása}]
+Document doc = dBuilder.parse(xmlFile);
+doc.getDocumentElement().normalize();
+
+modifyAthletes(doc);
+modifyMemberships(doc);
+modifyLocations(doc);
+
+TransformerFactory transformerFactory = TransformerFactory.newInstance();
+Transformer transformer = transformerFactory.newTransformer();
+
+transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+DOMSource source = new DOMSource(doc);
+StreamResult consoleResult = new StreamResult(System.out);
+transformer.transform(source, consoleResult);
+\end{lstlisting}
+
+\subsection*{Athlete azonosítók módosítása}
+
+\begin{lstlisting}[language=MyJava, caption={Athlete ID-k módosítása VTJ4ESDomModify-ban}]
+private static void modifyAthletes(Document doc) {
+    NodeList athleteList = doc.getElementsByTagName("Athlete");
+
+    for (int i = 0; i < athleteList.getLength(); i++) {
+        Node node = athleteList.item(i);
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            Element athlete = (Element) node;
+            String id = athlete.getAttribute("athleteID");
+
+            if (id != null && !id.startsWith("ATH_")) {
+                athlete.setAttribute("athleteID", "ATH_" + id);
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection*{Location kapacitások és profil szöveg módosítása}
+
+\begin{lstlisting}[language=MyJava, caption={Location elemek módosítása VTJ4ESDomModify-ban}]
+private static void modifyLocations(Document doc) {
+    NodeList locationList = doc.getElementsByTagName("Location");
+
+    for (int i = 0; i < locationList.getLength(); i++) {
+        Node node = locationList.item(i);
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            Element location = (Element) node;
+
+            Node capacityNode = location.getElementsByTagName("capacity").item(0);
+            if (capacityNode != null && capacityNode.getNodeType() == Node.ELEMENT_NODE) {
+                String capacityText = capacityNode.getTextContent().trim();
+                try {
+                    int capacity = Integer.parseInt(capacityText);
+                    if (capacity < 100) {
+                        capacity = 100;
+                    }
+                    capacityNode.setTextContent(String.valueOf(capacity));
+                } catch (NumberFormatException e) {
+                    // ervenytelen ertek figyelmen kivul hagyasa
+                }
+            }
+
+            NodeList profileList = location.getElementsByTagName("profile");
+            if (profileList.getLength() > 0) {
+                Element profile = (Element) profileList.item(0);
+                Node profileTextNode = profile.getElementsByTagName("profile_text")
+                                              .item(0);
+                if (profileTextNode != null
+                        && profileTextNode.getNodeType() == Node.ELEMENT_NODE) {
+                    String oldText = profileTextNode.getTextContent();
+                    if (!oldText.endsWith(" (updated)")) {
+                        profileTextNode.setTextContent(oldText + " (updated)");
+                    }
+                }
+            }
+        }
+    }
+}
+\end{lstlisting}
 
 \end{document}
