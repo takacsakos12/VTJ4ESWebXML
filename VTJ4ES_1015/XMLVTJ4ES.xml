@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fesztival xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNameSpaceSchemaLocation="XMLSchemaFesztival.xsd">
+
+    <fesztival fkod="f1">
+        <nev>Fesztival_KLNSPG_1</nev>
+        <helyszin>
+            <telepules>Budapest</telepules>
+            <terulet>Deák tér</terulet>
+        </helyszin>
+    </fesztival>
+    
+    <fesztival fkod="f2">
+        <nev>Fesztival_KLNSPG_2</nev>
+        <helyszin>
+            <telepules>Debrecen</telepules>
+            <terulet>Kossuth tér</terulet>
+        </helyszin>
+    </fesztival>
+
+    <alkalmazott akod="a1" f_a="f1">
+        <nev>Alkalmazott Név 1</nev>
+        <kozvelemeny>Pozitív</kozvelemeny>
+    </alkalmazott>
+    
+    <alkalmazott akod="a2" f_a="f2">
+        <nev>Alkalmazott Név 2</nev>
+        <kozvelemeny>Neutrális</kozvelemeny>
+    </alkalmazott>
+
+    <fellepo fkod="fl1" f_fl="f1">
+        <nev>Fellépő Név 1</nev>
+        <mufaj>Rock</mufaj>
+    </fellepo>
+    
+    <fellepo fkod="fl2" f_fl="f2">
+        <nev>Fellépő Név 2</nev>
+        <mufaj>Pop</mufaj>
+    </fellepo>
+
+    <tulajdonos tkod="t1" f_t="f1">
+        <nev>Tulajdonos Név 1</nev>
+        <alapitas>2000.01.01</alapitas>
+    </tulajdonos>
+    
+    <tulajdonos tkod="t2" f_t="f2">
+        <nev>Tulajdonos Név 2</nev>
+        <alapitas>2005.05.05</alapitas>
+    </tulajdonos>
+
+    <bar bkod="b1" f_t="f1">
+        <nev>Mangalica Bár 1</nev>
+        <ital>Pina Colada</ital>
+    </bar>
+    
+    <bar bkod="b2" f_t="f2">
+        <nev>Mangalica Bár 2</nev>
+        <ital>Mojito</ital>
+    </bar>
+
+    <kozvelemeny kkod="k1" f_t="f1">
+        <kerdezo>Mangalica Bár 1</kerdezo>
+    </kozvelemeny>
+    
+    <kozvelemeny kkod="k2" f_t="f2">
+        <kerdezo>Mangalica Bár 2</kerdezo>
+    </kozvelemeny>
+
+    <nyelvtudas nykod="ny1" f_t="f1">
+        <nyelv>Angol</nyelv>
+        <szint>C1</szint>
+    </nyelvtudas>
+    
+    <nyelvtudas nykod="ny2" f_t="f2">
+        <nyelv>Német</nyelv>
+        <szint>B2</szint>
+    </nyelvtudas>
+
+    <resztvevo rkod="r1" f_r="f1">
+        <nev>Példa Név 1</nev>
+        <telepules>Miskolc</telepules>
+        <diakigazolvany>12345678</diakigazolvany>
+    </resztvevo>
+    
+    <resztvevo rkod="r2" f_r="f2">
+        <nev>Példa Név 2</nev>
+        <telepules>Eger</telepules>
+        <diakigazolvany>87654321</diakigazolvany>
+    </resztvevo>
+
+</fesztival>

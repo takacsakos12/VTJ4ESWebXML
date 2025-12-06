@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <!-- Saját egyszerű típusok -->
+  <xs:simpleType name="tanevTipus">
+    <xs:restriction base="xs:string">
+      <!-- pl.: 2025_2026 I. -->
+      <xs:pattern value="[0-9]{4}_[0-9]{4} I\."/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="egyetemTipus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ME"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="idTipus">
+    <xs:restriction base="xs:string">
+      <!-- betűk, számok, pont, kötőjel -->
+      <xs:pattern value="[A-Z0-9\.\-]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="igenNemTipus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="igen"/>
+      <xs:enumeration value="nem"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- hallgato komplex típus -->
+  <xs:complexType name="hallgatoTipus">
+    <xs:sequence>
+      <xs:element name="hnev" type="xs:string"/>
+      <xs:element name="szulev" type="xs:date"/>
+      <xs:element name="szak">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="evf" type="xs:positiveInteger" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="idTipus" use="required"/>
+  </xs:complexType>
+
+  <!-- kurzus komplex típus -->
+  <xs:complexType name="kurzusTipus">
+    <xs:sequence>
+      <xs:element name="kurzusnev" type="xs:string"/>
+      <xs:element name="kredit" type="xs:positiveInteger"/>
+      <xs:element name="hely" type="xs:string"/>
+      <xs:element name="idopont" type="xs:string"/>
+      <xs:element name="oktato" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="idTipus" use="required"/>
+    <xs:attribute name="nyelv" type="xs:string" use="optional"/>
+    <xs:attribute name="jovahagyas" type="igenNemTipus" use="optional"/>
+  </xs:complexType>
+
+  <!-- kurzusok komplex típus: sok kurzus -->
+  <xs:complexType name="kurzusokTipus">
+    <xs:sequence>
+      <xs:element name="kurzus" type="kurzusTipus" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Globális elemek, amikre ref-fel hivatkozunk -->
+  <xs:element name="hallgato" type="hallgatoTipus"/>
+  <xs:element name="kurzusok" type="kurzusokTipus"/>
+
+  <!-- Gyökérelem -->
+  <xs:element name="VTJ4ES_kurzusfelvetel">
+    <xs:complexType>
+      <xs:sequence>
+        <!-- ITT jön a ref, ahogy a feladat kérte -->
+        <xs:element ref="hallgato"/>
+        <xs:element ref="kurzusok"/>
+      </xs:sequence>
+      <xs:attribute name="tanev" type="tanevTipus" use="required"/>
+      <xs:attribute name="egyetem" type="egyetemTipus" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

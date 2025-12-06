@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head><title>Hallgatói lista</title></head>
+  <body>
+    <h2>VTJ4ES – Hallgatói lista</h2>
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>ID</th><th>Név</th><th>Születési idő</th><th>Szak</th><th>Átlag</th>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td>Takács Ákos</td>
+        <td>2002-12-09</td>
+        <td>Programtervező Informatikus</td>
+        <td>4.30</td>
+      </tr>
+      <tr>
+        <td>02</td><td>Kiss Bence</td><td>2001-05-12</td><td>Programtervező Informatikus</td><td>3.85</td>
+      </tr>
+    </table>
+  </body>
+</html>

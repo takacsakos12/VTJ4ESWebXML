@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hallgatok>
+    <hallgato id="01">
+        <nev>Takács Ákos</nev>
+        <szulido>2002-12-09</szulido>
+        <szak>Programtervező Informatikus</szak>
+        <atlag>4.30</atlag>
+    </hallgato>
+
+    <hallgato id="02">
+        <nev>Kiss Bence</nev>
+        <szulido>2001-05-12</szulido>
+        <szak>Programtervező Informatikus</szak>
+        <atlag>3.85</atlag>
+    </hallgato>
+
+    <hallgato id="03">
+        <nev>Nagy Dániel</nev>
+        <szulido>2000-03-21</szulido>
+        <szak>Mérnökinformatikus</szak>
+        <atlag>4.10</atlag>
+    </hallgato>
+</hallgatok>
